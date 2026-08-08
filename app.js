@@ -60,6 +60,10 @@ const elements = {
   snackbarUndo: document.getElementById("undoSnackbarUndo")
 };
 
+const viewportState = {
+  focusTimer: null
+};
+
 renderList();
 loadMonsterLibrary();
 syncEnemyFormAccordionState();
@@ -93,6 +97,13 @@ elements.level.addEventListener("change", () => {
   renderList();
 });
 elements.fullscreen.addEventListener("click", toggleFullscreen);
+document.addEventListener("fullscreenchange", syncViewportInsets);
+window.addEventListener("resize", syncViewportInsets);
+window.addEventListener("focusin", handleViewportFocusIn);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", syncViewportInsets);
+  window.visualViewport.addEventListener("scroll", syncViewportInsets);
+}
 elements.snackbarUndo.addEventListener("pointerup", event => {
   event.preventDefault();
   event.stopPropagation();
@@ -109,6 +120,41 @@ function closeEnemyFormPanel() {
   if (!elements.accordion) return;
   elements.accordion.open = false;
   syncEnemyFormAccordionState();
+}
+
+function syncViewportInsets() {
+  const root = document.documentElement;
+  const isFullscreen = Boolean(document.fullscreenElement);
+
+  if (!isFullscreen) {
+    root.style.removeProperty("--keyboard-offset");
+    if (viewportState.focusTimer) {
+      clearTimeout(viewportState.focusTimer);
+      viewportState.focusTimer = null;
+    }
+    return;
+  }
+
+  const viewport = window.visualViewport;
+  const keyboardInset = viewport
+    ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+    : 0;
+
+  const safeOffset = keyboardInset > 0 ? Math.min(keyboardInset + 24, 360) : 0;
+  root.style.setProperty("--keyboard-offset", `${safeOffset}px`);
+}
+
+function handleViewportFocusIn(event) {
+  if (!document.fullscreenElement) return;
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  if (!target.matches("input, select, textarea")) return;
+
+  if (viewportState.focusTimer) clearTimeout(viewportState.focusTimer);
+  viewportState.focusTimer = window.setTimeout(() => {
+    target.scrollIntoView({ block: "center", inline: "nearest", behavior: "auto" });
+    syncViewportInsets();
+  }, 60);
 }
 
 elements.list.addEventListener("click", event => {
@@ -1139,6 +1185,7 @@ async function toggleFullscreen() {
     } else {
       await document.exitFullscreen();
     }
+    syncViewportInsets();
   } catch {
     console.warn("No se pudo activar la pantalla completa.");
   }

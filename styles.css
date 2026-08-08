@@ -16,6 +16,7 @@
   --danger: #e84b40;
   --gap: 5px;
   --button-height: 36px;
+  --keyboard-offset: 0px;
 }
 
 * {
@@ -101,7 +102,7 @@ select:focus {
 .app {
   width: min(100%, 430px);
   margin: 0 auto;
-  padding: max(6px, env(safe-area-inset-top)) 8px max(10px, env(safe-area-inset-bottom));
+  padding: max(6px, env(safe-area-inset-top)) 8px calc(max(10px, env(safe-area-inset-bottom)) + var(--keyboard-offset));
 }
 
 .topbar {
