@@ -124,17 +124,6 @@ function closeEnemyFormPanel() {
 
 function syncViewportInsets() {
   const root = document.documentElement;
-  const isFullscreen = Boolean(document.fullscreenElement);
-
-  if (!isFullscreen) {
-    root.style.removeProperty("--keyboard-offset");
-    if (viewportState.focusTimer) {
-      clearTimeout(viewportState.focusTimer);
-      viewportState.focusTimer = null;
-    }
-    return;
-  }
-
   const viewport = window.visualViewport;
   const keyboardInset = viewport
     ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
@@ -142,10 +131,14 @@ function syncViewportInsets() {
 
   const safeOffset = keyboardInset > 0 ? Math.min(keyboardInset + 24, 360) : 0;
   root.style.setProperty("--keyboard-offset", `${safeOffset}px`);
+
+  if (safeOffset === 0 && viewportState.focusTimer) {
+    clearTimeout(viewportState.focusTimer);
+    viewportState.focusTimer = null;
+  }
 }
 
 function handleViewportFocusIn(event) {
-  if (!document.fullscreenElement) return;
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
   if (!target.matches("input, select, textarea")) return;
