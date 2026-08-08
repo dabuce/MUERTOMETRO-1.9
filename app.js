@@ -44,6 +44,7 @@ normalizeEnemyOrdinals(state.enemies);
 saveEnemies();
 
 const elements = {
+  accordion: document.getElementById("enemyFormAccordion"),
   form: document.getElementById("enemyForm"),
   name: document.getElementById("nameInput"),
   suggestions: document.getElementById("monsterSuggestions"),
@@ -61,11 +62,14 @@ const elements = {
 
 renderList();
 loadMonsterLibrary();
+syncEnemyFormAccordionState();
 
 elements.form.addEventListener("submit", event => {
   event.preventDefault();
   addEnemies();
 });
+
+elements.accordion.addEventListener("toggle", syncEnemyFormAccordionState);
 
 elements.name.addEventListener("input", () => {
   renderMonsterSuggestions();
@@ -96,6 +100,17 @@ elements.snackbarUndo.addEventListener("pointerup", event => {
   undoDeleteEnemy();
 });
 elements.snackbarUndo.addEventListener("click", undoDeleteEnemy);
+
+function syncEnemyFormAccordionState() {
+  const isOpen = Boolean(elements.accordion?.open);
+  if (!isOpen) closeMonsterSuggestions();
+}
+
+function closeEnemyFormPanel() {
+  if (!elements.accordion) return;
+  elements.accordion.open = false;
+  syncEnemyFormAccordionState();
+}
 
 elements.list.addEventListener("click", event => {
   const button = event.target.closest("button");
@@ -549,6 +564,7 @@ function addEnemies() {
   state.enemies.push(...newEnemies);
   elements.quantity.value = "1";
   closeMonsterSuggestions();
+  closeEnemyFormPanel();
   renderList();
   saveEnemies();
 }
