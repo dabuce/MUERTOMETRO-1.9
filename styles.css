@@ -360,7 +360,7 @@ h1 {
 
 @media (max-width: 520px) and (display-mode: browser) {
   .app {
-    padding-top: calc(max(6px, env(safe-area-inset-top)) + 28px);
+    padding-top: calc(max(6px, env(safe-area-inset-top)) + 14px);
   }
 
   .topbar {
