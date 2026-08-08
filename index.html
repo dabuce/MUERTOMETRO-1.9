@@ -31,10 +31,10 @@
       <div class="enemy-form-panel">
         <form class="enemy-form" id="enemyForm" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           <div class="monster-search">
-            <input id="nameInput" name="enemy-name" type="text" placeholder="Enemigo" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="monsterSuggestions">
+            <input id="nameInput" name="enemy-name" type="text" placeholder="Enemigo" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" enterkeyhint="next" data-form-type="other" data-lpignore="true" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="monsterSuggestions">
             <div class="monster-suggestions" id="monsterSuggestions" role="listbox"></div>
           </div>
-          <select id="levelInput" name="scenario-level" autocomplete="off" aria-label="Nivel">
+          <select id="levelInput" name="scenario-level" autocomplete="new-password" aria-label="Nivel">
             <option value="0">Nivel 0</option>
             <option value="1">Nivel 1</option>
             <option value="2">Nivel 2</option>
@@ -44,9 +44,9 @@
             <option value="6">Nivel 6</option>
             <option value="7">Nivel 7</option>
           </select>
-          <input id="healthInput" name="enemy-health" type="number" min="1" step="1" inputmode="numeric" placeholder="Vida" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <input id="shieldInput" name="enemy-shield" type="number" min="0" step="1" inputmode="numeric" placeholder="Escudo" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <input id="quantityInput" name="enemy-quantity" type="number" min="1" max="99" step="1" inputmode="numeric" placeholder="Nº" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <input id="healthInput" name="enemy-health" type="number" min="1" step="1" inputmode="numeric" placeholder="Vida" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <input id="shieldInput" name="enemy-shield" type="number" min="0" step="1" inputmode="numeric" placeholder="Escudo" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <input id="quantityInput" name="enemy-quantity" type="number" min="1" max="99" step="1" inputmode="numeric" placeholder="Nº" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
           <button class="add-button" type="submit">Añadir enemigo</button>
         </form>
       </div>
