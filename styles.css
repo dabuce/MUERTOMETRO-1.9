@@ -193,7 +193,14 @@ h1 {
 }
 
 .enemy-form-panel {
-  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  overflow: visible;
+}
+
+.enemy-form-panel .enemy-form {
+  position: relative;
+  z-index: 1;
 }
 
 .enemy-form-accordion[open] .enemy-form-panel {
@@ -234,6 +241,7 @@ h1 {
   position: relative;
   grid-column: 1 / -1;
   min-width: 0;
+  z-index: 2;
 }
 
 .monster-search::after {
@@ -254,13 +262,16 @@ h1 {
 
 .monster-suggestions {
   position: absolute;
-  z-index: 20;
+  z-index: 40;
   top: calc(100% + 3px);
   left: 0;
   right: 0;
   display: none;
   max-height: 188px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   border: 1px solid rgba(220, 195, 125, .8);
   border-radius: 6px;
   background: #303030;
@@ -321,6 +332,16 @@ h1 {
 .enemy-list {
   display: grid;
   gap: 7px;
+}
+
+@media (max-width: 520px) and (display-mode: browser) {
+  .app {
+    padding-top: calc(max(6px, env(safe-area-inset-top)) + 28px);
+  }
+
+  .topbar {
+    margin-top: 0;
+  }
 }
 
 .undo-snackbar {

@@ -79,10 +79,9 @@ elements.name.addEventListener("input", () => {
 elements.name.addEventListener("change", fillStatsFromSelection);
 
 elements.name.addEventListener("keydown", handleSearchKeydown);
-elements.suggestions.addEventListener("pointerdown", event => {
+elements.suggestions.addEventListener("click", event => {
   const button = event.target.closest(".monster-suggestion");
   if (!button) return;
-  event.preventDefault();
   selectMonster(button.dataset.monsterName);
 });
 document.addEventListener("pointerdown", event => {
