@@ -223,7 +223,7 @@ h1 {
 .enemy-form-panel {
   position: relative;
   z-index: 5;
-  overflow: hidden;
+  overflow: visible;
   max-height: 0;
   opacity: 0;
   transform: translateY(-8px);
@@ -286,7 +286,7 @@ h1 {
   position: relative;
   grid-column: 1 / -1;
   min-width: 0;
-  z-index: 2;
+  z-index: 20;
 }
 
 .monster-search::after {
@@ -307,7 +307,7 @@ h1 {
 
 .monster-suggestions {
   position: absolute;
-  z-index: 40;
+  z-index: 60;
   top: calc(100% + 3px);
   left: 0;
   right: 0;

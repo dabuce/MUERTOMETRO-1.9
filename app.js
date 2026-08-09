@@ -128,6 +128,7 @@ function collapseEnemyFormAccordion() {
   if (!elements.accordion) return;
   if (!elements.accordion.open) return;
 
+  closeMonsterSuggestions();
   elements.accordion.classList.add("is-collapsing");
   const panel = elements.accordion.querySelector(".enemy-form-panel");
   const finishCollapse = event => {
