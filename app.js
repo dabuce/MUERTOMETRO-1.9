@@ -74,6 +74,10 @@ elements.form.addEventListener("submit", event => {
 });
 
 elements.accordion.addEventListener("toggle", syncEnemyFormAccordionState);
+elements.accordion.querySelector(".enemy-form-toggle")?.addEventListener("click", event => {
+  event.preventDefault();
+  toggleEnemyFormAccordion();
+});
 
 elements.name.addEventListener("input", () => {
   renderMonsterSuggestions();
@@ -117,9 +121,39 @@ function syncEnemyFormAccordionState() {
 }
 
 function closeEnemyFormPanel() {
+  collapseEnemyFormAccordion();
+}
+
+function collapseEnemyFormAccordion() {
   if (!elements.accordion) return;
-  elements.accordion.open = false;
-  syncEnemyFormAccordionState();
+  if (!elements.accordion.open) return;
+
+  elements.accordion.classList.add("is-collapsing");
+  const panel = elements.accordion.querySelector(".enemy-form-panel");
+  const finishCollapse = event => {
+    if (event.target !== panel || event.propertyName !== "max-height") return;
+    panel.removeEventListener("transitionend", finishCollapse);
+    elements.accordion.open = false;
+    elements.accordion.classList.remove("is-collapsing");
+    syncEnemyFormAccordionState();
+  };
+
+  panel?.addEventListener("transitionend", finishCollapse);
+}
+
+function toggleEnemyFormAccordion() {
+  if (!elements.accordion) return;
+
+  if (elements.accordion.open) {
+    collapseEnemyFormAccordion();
+    return;
+  }
+
+  elements.accordion.open = true;
+  requestAnimationFrame(() => {
+    elements.accordion.classList.remove("is-collapsing");
+    syncEnemyFormAccordionState();
+  });
 }
 
 function syncViewportInsets() {

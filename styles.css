@@ -212,14 +212,18 @@ h1 {
   border-bottom-right-radius: 0;
 }
 
-.enemy-form-accordion[open] .enemy-form {
-  animation: enemyFormReveal .46s cubic-bezier(.24, .98, .34, 1) both;
-}
-
 .enemy-form-panel {
   position: relative;
   z-index: 5;
-  overflow: visible;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    max-height .32s cubic-bezier(.22, 1, .36, 1),
+    opacity .22s ease,
+    transform .22s ease;
+  will-change: max-height, opacity, transform;
 }
 
 .enemy-form-panel .enemy-form {
@@ -228,7 +232,16 @@ h1 {
 }
 
 .enemy-form-accordion[open] .enemy-form-panel {
-  animation: enemyFormPanelReveal .46s cubic-bezier(.24, .98, .34, 1) both;
+  max-height: 420px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.enemy-form-accordion.is-collapsing .enemy-form-panel {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
 }
 
 .enemy-form {
@@ -325,32 +338,6 @@ h1 {
   background: #e8a7b8;
   color: #292929;
   font-size: 17px;
-}
-
-@keyframes enemyFormReveal {
-  from {
-    opacity: 0;
-    transform: translateY(-6px) scale(.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes enemyFormPanelReveal {
-  from {
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    max-height: 360px;
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .enemy-list {
