@@ -191,6 +191,11 @@ h1 {
   text-align: center;
   cursor: pointer;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 6px 14px rgba(0, 0, 0, .18);
+  transition:
+    border-radius .26s cubic-bezier(.22, 1, .36, 1),
+    box-shadow .22s ease,
+    background-color .22s ease,
+    background-position .22s ease;
 }
 
 .enemy-form-toggle::-webkit-details-marker {
@@ -208,8 +213,11 @@ h1 {
 
 .enemy-form-accordion[open] .enemy-form-toggle {
   border-bottom: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 14px 14px 0 0;
+}
+
+.enemy-form-accordion.is-collapsing .enemy-form-toggle {
+  border-radius: 14px;
 }
 
 .enemy-form-panel {
