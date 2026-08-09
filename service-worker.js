@@ -1,4 +1,4 @@
-const CACHE_NAME = "muertometro-v7";
+const CACHE_NAME = "muertometro-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,6 +6,7 @@ const APP_SHELL = [
   "./app.js",
   "./manifest.json",
   "./data/monsters.json",
+  "./assets/banner-header.webp",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
   "./assets/icons/attack.svg",
@@ -54,6 +55,7 @@ self.addEventListener("fetch", event => {
     url.pathname.endsWith("/app.js") ||
     url.pathname.endsWith("/manifest.json") ||
     url.pathname.endsWith("/data/monsters.json") ||
+    url.pathname.endsWith("/assets/banner-header.webp") ||
     url.pathname.startsWith("/assets/icons/")
   );
 
