@@ -39,6 +39,9 @@ const state = {
   pendingDamageUndo: new Map(),
   pendingDamageTimers: new Map(),
   swipeDelete: null,
+  gesture: null,
+  clickSuppression: null,
+  clickSuppressionTimer: null,
   selectedEnemyId: null,
   deleteUndo: null
 };
@@ -209,16 +212,332 @@ function handleViewportFocusIn(event) {
   }, 60);
 }
 
+function getListInteractionDescriptor(event) {
+  const groupHeader = event.target.closest(".enemy-group-title");
+  if (groupHeader) {
+    const groupNode = groupHeader.closest(".enemy-group");
+    if (!groupNode) return null;
+    return {
+      kind: "group",
+      node: groupNode,
+      id: groupNode.dataset.groupKey,
+      groupKind: groupNode.dataset.groupKind || "type",
+      swipeable: groupNode.dataset.groupKind === "room"
+    };
+  }
+
+  const enemyNode = event.target.closest(".enemy");
+  if (!enemyNode) return null;
+  if (event.target.closest("button, input, select, textarea, label")) return null;
+
+  return {
+    kind: "enemy",
+    node: enemyNode,
+    id: enemyNode.dataset.id,
+    swipeable: true
+  };
+}
+
+function setClickSuppression(kind, id) {
+  state.clickSuppression = { kind, id };
+  if (state.clickSuppressionTimer) clearTimeout(state.clickSuppressionTimer);
+  state.clickSuppressionTimer = window.setTimeout(() => {
+    clearClickSuppression();
+  }, 450);
+}
+
+function clearClickSuppression() {
+  if (state.clickSuppressionTimer) {
+    clearTimeout(state.clickSuppressionTimer);
+    state.clickSuppressionTimer = null;
+  }
+  state.clickSuppression = null;
+}
+
+function startListGesture(event, descriptor) {
+  if (state.gesture) return;
+
+  const rect = descriptor.node.getBoundingClientRect();
+  const gesture = {
+    pointerId: event.pointerId,
+    descriptor,
+    node: descriptor.node,
+    startX: event.clientX,
+    startY: event.clientY,
+    currentX: event.clientX,
+    currentY: event.clientY,
+    mode: "pending",
+    pressTimer: null,
+    threshold: Math.max(88, rect.width * 0.28),
+    placeholder: null,
+    parent: null,
+    startRect: rect
+  };
+
+  state.gesture = gesture;
+
+  if (descriptor.node.setPointerCapture) {
+    try {
+      descriptor.node.setPointerCapture(event.pointerId);
+    } catch {
+      // Ignore capture failures for nodes that do not support it.
+    }
+  }
+
+  gesture.pressTimer = window.setTimeout(() => {
+    if (state.gesture !== gesture || gesture.mode !== "pending") return;
+    beginListDrag(gesture);
+  }, 250);
+}
+
+function updateListGesture(event) {
+  const gesture = state.gesture;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
+
+  gesture.currentX = event.clientX;
+  gesture.currentY = event.clientY;
+
+  if (gesture.mode === "pending") {
+    const dx = gesture.currentX - gesture.startX;
+    const dy = gesture.currentY - gesture.startY;
+    if (gesture.descriptor.swipeable && dx > 10 && Math.abs(dx) > Math.abs(dy)) {
+      beginListSwipe(gesture);
+      updateListGesture(event);
+    }
+    return;
+  }
+
+  if (gesture.mode === "swipe") {
+    const dx = gesture.currentX - gesture.startX;
+    const width = Math.max(1, gesture.node.getBoundingClientRect().width);
+    const translateX = Math.min(Math.max(0, dx), width * 0.45);
+    gesture.node.style.transform = `translate3d(${translateX}px, 0, 0)`;
+    gesture.threshold = Math.max(88, width * 0.28);
+    event.preventDefault();
+    return;
+  }
+
+  if (gesture.mode === "drag") {
+    gesture.node.style.transform = `translate3d(${gesture.currentX - gesture.startX}px, ${gesture.currentY - gesture.startY}px, 0)`;
+    moveDragPlaceholder(gesture);
+    event.preventDefault();
+  }
+}
+
+function beginListSwipe(gesture) {
+  if (gesture.mode !== "pending") return;
+
+  clearTimeout(gesture.pressTimer);
+  gesture.pressTimer = null;
+  gesture.mode = "swipe";
+  gesture.node.classList.add("swipe-delete-active");
+}
+
+function beginListDrag(gesture) {
+  if (gesture.mode !== "pending") return;
+
+  clearTimeout(gesture.pressTimer);
+  gesture.pressTimer = null;
+  gesture.mode = "drag";
+  gesture.parent = gesture.node.parentElement;
+  if (!gesture.parent) {
+    gesture.mode = "pending";
+    return;
+  }
+
+  const rect = gesture.node.getBoundingClientRect();
+  gesture.startRect = rect;
+  gesture.placeholder = document.createElement("div");
+  gesture.placeholder.className = "drag-placeholder";
+  gesture.placeholder.style.height = `${rect.height}px`;
+  gesture.placeholder.style.width = `${rect.width}px`;
+
+  gesture.parent.insertBefore(gesture.placeholder, gesture.node);
+  document.body.appendChild(gesture.node);
+  gesture.node.classList.add("is-dragging");
+  gesture.node.style.position = "fixed";
+  gesture.node.style.left = `${rect.left}px`;
+  gesture.node.style.top = `${rect.top}px`;
+  gesture.node.style.width = `${rect.width}px`;
+  gesture.node.style.height = `${rect.height}px`;
+  gesture.node.style.margin = "0";
+  gesture.node.style.zIndex = "1000";
+  gesture.node.style.pointerEvents = "none";
+  gesture.node.style.touchAction = "none";
+  gesture.node.style.transform = `translate3d(${gesture.currentX - gesture.startX}px, ${gesture.currentY - gesture.startY}px, 0)`;
+  moveDragPlaceholder(gesture);
+}
+
+function moveDragPlaceholder(gesture) {
+  if (!gesture.placeholder || !gesture.parent) return;
+
+  const children = Array.from(gesture.parent.children).filter(child => child !== gesture.placeholder);
+  let before = null;
+
+  for (const child of children) {
+    const rect = child.getBoundingClientRect();
+    if (gesture.currentY < rect.top + rect.height / 2) {
+      before = child;
+      break;
+    }
+  }
+
+  if (before) {
+    gesture.parent.insertBefore(gesture.placeholder, before);
+  } else {
+    gesture.parent.appendChild(gesture.placeholder);
+  }
+}
+
+function finishListGesture(event) {
+  const gesture = state.gesture;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
+
+  clearTimeout(gesture.pressTimer);
+  gesture.pressTimer = null;
+
+  if (gesture.mode === "drag") {
+    finalizeDragGesture(gesture);
+  } else if (gesture.mode === "swipe") {
+    finalizeSwipeGesture(gesture);
+  } else {
+    cleanupGestureNode(gesture);
+  }
+
+  releaseGesturePointer(gesture, event.pointerId);
+  state.gesture = null;
+}
+
+function cancelListGesture(event) {
+  const gesture = state.gesture;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
+
+  clearTimeout(gesture.pressTimer);
+  gesture.pressTimer = null;
+
+  if (gesture.mode === "drag" || gesture.mode === "swipe") {
+    renderList();
+  }
+
+  cleanupGestureNode(gesture);
+  releaseGesturePointer(gesture, event.pointerId);
+  state.gesture = null;
+}
+
+function finalizeSwipeGesture(gesture) {
+  const shouldDelete = gesture.currentX - gesture.startX >= gesture.threshold;
+  cleanupGestureNode(gesture);
+  setClickSuppression(gesture.descriptor.kind, gesture.descriptor.id);
+
+  if (!shouldDelete) return;
+
+  if (gesture.descriptor.kind === "enemy") {
+    deleteEnemy(gesture.descriptor.id);
+    return;
+  }
+
+  if (gesture.descriptor.kind === "group" && gesture.descriptor.groupKind === "room") {
+    deleteRoom(gesture.descriptor.id);
+  }
+}
+
+function finalizeDragGesture(gesture) {
+  if (gesture.placeholder?.parentNode) {
+    gesture.placeholder.replaceWith(gesture.node);
+  }
+
+  cleanupGestureNode(gesture);
+  setClickSuppression(gesture.descriptor.kind, gesture.descriptor.id);
+  syncStateOrderFromDom();
+  normalizeEnemyOrdinals(state.enemies);
+  renderList();
+  saveEnemies();
+}
+
+function cleanupGestureNode(gesture) {
+  const node = gesture.node;
+  node.classList.remove("swipe-delete-active", "is-dragging");
+  node.style.transform = "";
+  node.style.removeProperty("position");
+  node.style.removeProperty("left");
+  node.style.removeProperty("top");
+  node.style.removeProperty("width");
+  node.style.removeProperty("height");
+  node.style.removeProperty("margin");
+  node.style.removeProperty("z-index");
+  node.style.removeProperty("pointer-events");
+  node.style.removeProperty("touch-action");
+
+  if (gesture.placeholder?.parentNode) {
+    gesture.placeholder.remove();
+  }
+
+  gesture.placeholder = null;
+  gesture.parent = null;
+}
+
+function releaseGesturePointer(gesture, pointerId) {
+  if (gesture.node.releasePointerCapture) {
+    try {
+      gesture.node.releasePointerCapture(pointerId);
+    } catch {
+      // Ignore release failures for nodes that no longer own the pointer.
+    }
+  }
+}
+
+function syncStateOrderFromDom() {
+  const orderedIds = [];
+
+  for (const child of elements.list.children) {
+    collectEnemyIdsFromDomNode(child, orderedIds);
+  }
+
+  const byId = new Map(state.enemies.map(enemy => [enemy.id, enemy]));
+  state.enemies = orderedIds.map(id => byId.get(id)).filter(Boolean);
+}
+
+function collectEnemyIdsFromDomNode(node, orderedIds) {
+  if (!(node instanceof HTMLElement)) return;
+
+  if (node.classList.contains("enemy")) {
+    orderedIds.push(node.dataset.id);
+    return;
+  }
+
+  if (!node.classList.contains("enemy-group")) return;
+
+  const rows = Array.from(node.children).find(child => child.classList?.contains("enemy-group-list"));
+  if (!rows) return;
+
+  for (const child of rows.children) {
+    collectEnemyIdsFromDomNode(child, orderedIds);
+  }
+}
+
 elements.list.addEventListener("click", event => {
   const button = event.target.closest("button");
   const enemyNode = event.target.closest(".enemy");
   const enemy = enemyNode ? findEnemy(enemyNode.dataset.id) : null;
+  const roomGroupNode = event.target.closest('.enemy-group[data-group-kind="room"]');
+  const roomGroupKey = roomGroupNode?.dataset.groupKey || null;
+  const clickSuppression = state.clickSuppression;
 
-  if (button && button.classList.contains("scenario-group-toggle")) {
-    const groupNode = button.closest(".enemy-group");
-    if (!groupNode) return;
-    toggleScenarioGroupCollapse(groupNode.dataset.groupKey);
-    return;
+  if (clickSuppression) {
+    if (clickSuppression.kind === "enemy" && enemyNode && enemyNode.dataset.id === clickSuppression.id) {
+      clearClickSuppression();
+      return;
+    }
+
+    if (clickSuppression.kind === "group" && roomGroupNode && roomGroupKey === clickSuppression.id) {
+      clearClickSuppression();
+      return;
+    }
+
+    if (clickSuppression.kind === "group" && button && button.closest(".enemy-group")?.dataset.groupKey === clickSuppression.id) {
+      clearClickSuppression();
+      return;
+    }
   }
 
   if (button && button.classList.contains("room-group-toggle")) {
@@ -283,102 +602,25 @@ elements.list.addEventListener("keydown", event => {
 
 elements.list.addEventListener("pointerdown", event => {
   if (event.button !== 0) return;
-  if (event.target.closest("button, input, select, textarea, label")) return;
+  const descriptor = getListInteractionDescriptor(event);
+  if (!descriptor) return;
 
-  const enemyNode = event.target.closest(".enemy");
-  if (!enemyNode) return;
-
-  state.swipeDelete = {
-    enemyId: enemyNode.dataset.id,
-    node: enemyNode,
-    pointerId: event.pointerId,
-    startX: event.clientX,
-    startY: event.clientY,
-    active: false,
-    suppressClickId: null
-  };
-
-  if (enemyNode.setPointerCapture) {
-    try {
-      enemyNode.setPointerCapture(event.pointerId);
-    } catch {
-      // Ignore capture failures on browsers that reject it for some targets.
-    }
-  }
+  startListGesture(event, descriptor);
 });
 
 elements.list.addEventListener("pointermove", event => {
-  const swipe = state.swipeDelete;
-  if (!swipe || swipe.pointerId !== event.pointerId) return;
+  const gesture = state.gesture;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
 
-  const dx = event.clientX - swipe.startX;
-  const dy = event.clientY - swipe.startY;
-  const node = swipe.node;
-  const width = Math.max(1, node.getBoundingClientRect().width);
-  const threshold = Math.max(88, width * 0.28);
-
-  if (!swipe.active) {
-    if (dx <= 10 || Math.abs(dx) <= Math.abs(dy)) return;
-    swipe.active = true;
-    node.classList.add("swipe-delete-active");
-  }
-
-  const translateX = Math.min(Math.max(0, dx), width * 0.45);
-  node.style.transform = `translate3d(${translateX}px, 0, 0)`;
-  node.dataset.swipeThreshold = String(threshold);
+  updateListGesture(event);
 });
 
 elements.list.addEventListener("pointerup", event => {
-  const swipe = state.swipeDelete;
-  if (swipe && swipe.pointerId === event.pointerId) {
-    const node = swipe.node;
-    const dx = event.clientX - swipe.startX;
-    const threshold = Number(node.dataset.swipeThreshold || Math.max(88, node.getBoundingClientRect().width * 0.28));
-    const shouldDelete = swipe.active && dx >= threshold;
-
-    node.classList.remove("swipe-delete-active");
-    node.style.transform = "";
-    delete node.dataset.swipeThreshold;
-
-    if (shouldDelete) {
-      swipe.suppressClickId = swipe.enemyId;
-      state.swipeDelete = swipe;
-      deleteEnemy(swipe.enemyId);
-    } else if (swipe.active) {
-      swipe.suppressClickId = swipe.enemyId;
-      state.swipeDelete = swipe;
-    }
-
-    if (node.releasePointerCapture) {
-      try {
-        node.releasePointerCapture(event.pointerId);
-      } catch {
-        // Ignore release failures for detached nodes.
-      }
-    }
-
-    if (!shouldDelete && !swipe.active) {
-      state.swipeDelete = null;
-    }
-  }
+  finishListGesture(event);
 });
 
 elements.list.addEventListener("pointercancel", event => {
-  const swipe = state.swipeDelete;
-  if (swipe && swipe.pointerId === event.pointerId) {
-    const node = swipe.node;
-    node.classList.remove("swipe-delete-active");
-    node.style.transform = "";
-    delete node.dataset.swipeThreshold;
-    if (node.releasePointerCapture) {
-      try {
-        node.releasePointerCapture(event.pointerId);
-      } catch {
-        // Ignore release failures for detached nodes.
-      }
-    }
-    state.swipeDelete = null;
-  }
+  cancelListGesture(event);
 });
 
 if ("serviceWorker" in navigator) {
@@ -519,11 +761,29 @@ async function importSelectedScenario() {
   const importedEnemies = buildScenarioEnemies(selectedScenario.data, level, players);
   if (importedEnemies.length === 0) return;
 
+  removeActiveScenarioEnemies();
   state.enemies.push(...importedEnemies);
   normalizeEnemyOrdinals(state.enemies);
   renderList();
   saveEnemies();
   closeScenarioModal();
+}
+
+function removeActiveScenarioEnemies() {
+  const removedIds = new Set(state.enemies.filter(enemy => enemy.scenarioId).map(enemy => enemy.id));
+  if (removedIds.size === 0) return;
+
+  state.enemies = state.enemies.filter(enemy => !enemy.scenarioId);
+
+  for (const id of removedIds) {
+    clearSelectedEnemyIfNeeded(id);
+    clearPendingDamage(id);
+    const node = state.nodes.get(id);
+    if (node) {
+      node.remove();
+      state.nodes.delete(id);
+    }
+  }
 }
 
 function renderMonsterSuggestions() {
@@ -639,7 +899,7 @@ function normalizeEnemy(enemy, index) {
     roomRef,
     roomOrder: toInt(enemy.roomOrder, null),
     roomCollapsed: Boolean(enemy.roomCollapsed),
-    scenarioCollapsed: Boolean(enemy.scenarioCollapsed)
+    groupCollapsed: Boolean(enemy.groupCollapsed)
   };
 }
 
@@ -653,6 +913,11 @@ function getEnemyIndex(enemyId) {
 
 function clearSelectedEnemyIfNeeded(enemyId) {
   if (state.selectedEnemyId === enemyId) state.selectedEnemyId = null;
+}
+
+function clearSelectedEnemyIfNeededForRoom(roomKey) {
+  const selected = state.selectedEnemyId ? findEnemy(state.selectedEnemyId) : null;
+  if (selected && getEnemyRoomKey(selected) === roomKey) state.selectedEnemyId = null;
 }
 
 function commitEnemyChange(enemy) {
@@ -770,6 +1035,16 @@ function clearPendingDamage(enemyId) {
   updateDamageBuildIndicator(enemyId);
 }
 
+function clearPendingDamageForRoom(roomKey) {
+  const enemyIds = state.enemies
+    .filter(enemy => getEnemyRoomKey(enemy) === roomKey)
+    .map(enemy => enemy.id);
+
+  for (const enemyId of enemyIds) {
+    clearPendingDamage(enemyId);
+  }
+}
+
 function addEnemies() {
   const baseName = elements.name.value.trim();
   const health = toInt(elements.health.value, NaN);
@@ -863,8 +1138,8 @@ function buildScenarioEnemies(scenario, level, players) {
         scenarioName,
         roomRef,
         roomOrder: roomIndex + 1,
-        roomCollapsed: false,
-        scenarioCollapsed: false
+        roomCollapsed: true,
+        groupCollapsed: true
       });
     });
   });
@@ -1010,13 +1285,39 @@ function deleteEnemy(enemyId) {
   state.enemies.splice(index, 1);
   renderList();
   saveEnemies();
-  showDeleteUndoSnackbar(snapshot, index);
+  showDeleteUndoSnackbar({
+    kind: "enemy",
+    label: snapshot.nombre,
+    index,
+    enemy: snapshot
+  });
+}
+
+function deleteRoom(roomKey) {
+  const roomEnemies = state.enemies.filter(enemy => getEnemyRoomKey(enemy) === roomKey);
+  if (roomEnemies.length === 0) return;
+
+  const firstIndex = state.enemies.findIndex(enemy => getEnemyRoomKey(enemy) === roomKey);
+  const snapshot = roomEnemies.map(cloneEnemy);
+
+  clearSelectedEnemyIfNeededForRoom(roomKey);
+  clearPendingDamageForRoom(roomKey);
+  hideDeleteUndoSnackbar();
+  state.enemies = state.enemies.filter(enemy => getEnemyRoomKey(enemy) !== roomKey);
+  renderList();
+  saveEnemies();
+  showDeleteUndoSnackbar({
+    kind: "room",
+    label: `Sala ${snapshot[0].roomRef || ""}`.trim(),
+    index: firstIndex,
+    roomKey,
+    enemies: snapshot
+  });
 }
 
 function renderList() {
   const seenIds = new Set();
   const roots = [];
-  const scenarioGroups = new Map();
   const roomGroups = new Map();
   const typeGroups = new Map();
 
@@ -1031,8 +1332,7 @@ function renderList() {
     seenIds.add(enemy.id);
 
     if (enemy.scenarioId) {
-      const scenarioGroup = ensureScenarioGroup(enemy, scenarioGroups, roots);
-      const roomGroup = ensureRoomGroup(enemy, scenarioGroup, roomGroups);
+      const roomGroup = ensureRoomGroup(enemy, roomGroups, roots);
       const typeGroup = ensureScenarioTypeGroup(enemy, roomGroup, typeGroups);
       typeGroup.rows.appendChild(node);
       return;
@@ -1044,7 +1344,7 @@ function renderList() {
 
   elements.list.replaceChildren(...roots.map(group => group.node));
 
-  for (const group of [...scenarioGroups.values(), ...roomGroups.values(), ...typeGroups.values()]) {
+  for (const group of [...roomGroups.values(), ...typeGroups.values()]) {
     syncGroupNode(group);
   }
 
@@ -1056,28 +1356,7 @@ function renderList() {
   }
 }
 
-function ensureScenarioGroup(enemy, scenarioGroups, roots) {
-  const key = getEnemyScenarioKey(enemy);
-  let group = scenarioGroups.get(key);
-  if (!group) {
-    group = createGroupNode({
-      kind: "scenario",
-      title: getEnemyScenarioTitle(enemy),
-      key,
-      collapsed: isScenarioCollapsed(key),
-      showStats: false
-    });
-    group.roomGroups = new Map();
-    scenarioGroups.set(key, group);
-    roots.push(group);
-  }
-
-  group.sourceEnemy ??= enemy;
-  group.count += 1;
-  return group;
-}
-
-function ensureRoomGroup(enemy, scenarioGroup, roomGroups) {
+function ensureRoomGroup(enemy, roomGroups, roots) {
   const key = getEnemyRoomKey(enemy);
   let group = roomGroups.get(key);
   if (!group) {
@@ -1090,7 +1369,7 @@ function ensureRoomGroup(enemy, scenarioGroup, roomGroups) {
     });
     group.typeGroups = new Map();
     roomGroups.set(key, group);
-    scenarioGroup.rows.appendChild(group.node);
+    roots.push(group);
   }
 
   group.sourceEnemy ??= enemy;
@@ -1496,14 +1775,6 @@ function getEnemyGroupTitle(enemy) {
   return getEnemyGroupName(enemy);
 }
 
-function getEnemyScenarioKey(enemy) {
-  return enemy?.scenarioId ? normalizeName(enemy.scenarioId) : null;
-}
-
-function getEnemyScenarioTitle(enemy) {
-  return String(enemy?.scenarioName || "Escenario").trim();
-}
-
 function getEnemyRoomKey(enemy) {
   if (!enemy?.scenarioId) return null;
   return `${normalizeName(enemy.scenarioId)}|${normalizeName(enemy.roomRef || "room")}`;
@@ -1543,23 +1814,6 @@ function setRoomCollapsed(roomKey, collapsed) {
 function toggleRoomGroupCollapse(roomKey) {
   const nextCollapsed = !isRoomCollapsed(roomKey);
   setRoomCollapsed(roomKey, nextCollapsed);
-  renderList();
-  saveEnemies();
-}
-
-function isScenarioCollapsed(scenarioKey) {
-  return state.enemies.some(enemy => getEnemyScenarioKey(enemy) === scenarioKey && Boolean(enemy.scenarioCollapsed));
-}
-
-function setScenarioCollapsed(scenarioKey, collapsed) {
-  state.enemies.forEach(enemy => {
-    if (getEnemyScenarioKey(enemy) === scenarioKey) enemy.scenarioCollapsed = Boolean(collapsed);
-  });
-}
-
-function toggleScenarioGroupCollapse(scenarioKey) {
-  const nextCollapsed = !isScenarioCollapsed(scenarioKey);
-  setScenarioCollapsed(scenarioKey, nextCollapsed);
   renderList();
   saveEnemies();
 }
@@ -1606,18 +1860,19 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-function showDeleteUndoSnackbar(enemySnapshot, index) {
-  if (!enemySnapshot) return;
+function showDeleteUndoSnackbar(payload) {
+  if (!payload) return;
 
+  const token = {};
   state.deleteUndo = {
-    enemy: enemySnapshot,
-    index,
+    ...payload,
+    token,
     timer: window.setTimeout(() => {
-      if (state.deleteUndo?.enemy?.id !== enemySnapshot.id) return;
+      if (state.deleteUndo?.token !== token) return;
       hideDeleteUndoSnackbar();
     }, 3000)
   };
-  renderDeleteUndoSnackbar(enemySnapshot);
+  renderDeleteUndoSnackbar(payload);
 }
 
 function undoDeleteEnemy() {
@@ -1625,8 +1880,14 @@ function undoDeleteEnemy() {
   if (!pending) return;
 
   clearTimeout(pending.timer);
-  const index = clamp(pending.index, 0, state.enemies.length);
-  state.enemies.splice(index, 0, cloneEnemy(pending.enemy));
+  if (pending.kind === "room") {
+    const index = clamp(pending.index, 0, state.enemies.length);
+    const restored = Array.isArray(pending.enemies) ? pending.enemies.map(cloneEnemy) : [];
+    state.enemies.splice(index, 0, ...restored);
+  } else if (pending.kind === "enemy") {
+    const index = clamp(pending.index, 0, state.enemies.length);
+    state.enemies.splice(index, 0, cloneEnemy(pending.enemy));
+  }
   hideDeleteUndoSnackbar();
   renderList();
   saveEnemies();
@@ -1658,9 +1919,12 @@ async function toggleFullscreen() {
   }
 }
 
-function renderDeleteUndoSnackbar(enemySnapshot) {
-  elements.snackbarMessage.textContent = `${enemySnapshot.nombre} eliminado`;
-  elements.snackbarUndo.dataset.id = enemySnapshot.id;
+function renderDeleteUndoSnackbar(payload) {
+  if (payload.kind === "room") {
+    elements.snackbarMessage.textContent = `${payload.label} eliminada`;
+  } else {
+    elements.snackbarMessage.textContent = `${payload.label} eliminado`;
+  }
   elements.snackbar.classList.add("visible");
 }
 
@@ -1672,7 +1936,6 @@ function clearDeleteUndoTimer() {
 
 function clearDeleteUndoSnackbar() {
   elements.snackbar.classList.remove("visible");
-  elements.snackbarUndo.dataset.id = "";
   elements.snackbarMessage.textContent = "";
 }
 
