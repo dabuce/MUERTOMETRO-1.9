@@ -442,8 +442,52 @@ h1 {
   touch-action: pan-y;
 }
 
-.enemy-group--room {
-  background: rgba(40, 40, 40, .96);
+.enemy-room {
+  display: grid;
+  gap: 0;
+}
+
+.enemy-room.is-collapsed {
+  margin-bottom: 0;
+}
+
+.enemy-room-toggle {
+  display: grid;
+  grid-template-columns: 1.15em minmax(0, 1fr);
+  align-items: center;
+  column-gap: 8px;
+  width: 100%;
+  padding: 0 7px;
+  margin: 0 0 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  text-shadow: none;
+  text-align: left;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.enemy-room-indicator {
+  justify-self: center;
+  width: 1em;
+  text-align: center;
+  color: var(--text);
+}
+
+.enemy-room-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 900;
+}
+
+.enemy-room-toggle:focus-visible {
+  outline: 2px solid rgba(220, 195, 125, .6);
+  outline-offset: 2px;
 }
 
 .enemy-group-title {
@@ -476,10 +520,6 @@ h1 {
   justify-self: center;
   width: 1em;
   text-align: center;
-}
-
-.enemy-group--room > .enemy-group-title {
-  color: var(--text);
 }
 
 .enemy-group--type > .enemy-group-title {
@@ -543,6 +583,10 @@ h1 {
 
 .enemy-group-list[hidden] {
   display: none;
+}
+
+.enemy-room + .enemy-group {
+  margin-top: 0;
 }
 
 .drag-placeholder {

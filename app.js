@@ -1416,7 +1416,7 @@ function renderList() {
 
     if (enemy.scenarioId) {
       const roomGroup = ensureRoomGroup(enemy, roomGroups, roots);
-      const typeGroup = ensureScenarioTypeGroup(enemy, roomGroup, typeGroups);
+      const typeGroup = ensureScenarioTypeGroup(enemy, roomGroup, typeGroups, roots);
       typeGroup.rows.appendChild(node);
       return;
     }
@@ -1427,8 +1427,18 @@ function renderList() {
 
   elements.list.replaceChildren(...roots.map(group => group.node));
 
-  for (const group of [...roomGroups.values(), ...typeGroups.values()]) {
+  for (const group of roomGroups.values()) {
+    syncRoomNode(group);
+  }
+
+  for (const group of typeGroups.values()) {
     syncGroupNode(group);
+  }
+
+  for (const group of typeGroups.values()) {
+    const roomKey = group.roomKey || null;
+    const room = roomKey ? roomGroups.get(roomKey) : null;
+    group.node.hidden = Boolean(room && room.collapsed);
   }
 
   for (const [id, node] of state.nodes) {
@@ -1443,14 +1453,12 @@ function ensureRoomGroup(enemy, roomGroups, roots) {
   const key = getEnemyRoomKey(enemy);
   let group = roomGroups.get(key);
   if (!group) {
-    group = createGroupNode({
+    group = createRoomNode({
       kind: "room",
       title: getEnemyRoomTitle(enemy),
       key,
-      collapsed: isRoomCollapsed(key),
-      showStats: false
+      collapsed: isRoomCollapsed(key)
     });
-    group.typeGroups = new Map();
     roomGroups.set(key, group);
     roots.push(group);
   }
@@ -1460,7 +1468,7 @@ function ensureRoomGroup(enemy, roomGroups, roots) {
   return group;
 }
 
-function ensureScenarioTypeGroup(enemy, roomGroup, typeGroups) {
+function ensureScenarioTypeGroup(enemy, roomGroup, typeGroups, roots) {
   const key = getEnemyGroupKey(enemy);
   let group = typeGroups.get(key);
   if (!group) {
@@ -1471,8 +1479,9 @@ function ensureScenarioTypeGroup(enemy, roomGroup, typeGroups) {
       collapsed: isGroupCollapsed(key),
       showStats: true
     });
+    group.roomKey = roomGroup.key;
     typeGroups.set(key, group);
-    roomGroup.rows.appendChild(group.node);
+    roots.push(group);
   }
 
   group.sourceEnemy ??= enemy;
@@ -1498,6 +1507,27 @@ function ensureManualTypeGroup(enemy, typeGroups, roots) {
   group.sourceEnemy ??= enemy;
   group.count += 1;
   return group;
+}
+
+function createRoomNode({ title, key, collapsed }) {
+  const node = document.createElement("article");
+  node.className = "enemy-room";
+  node.dataset.groupKey = key;
+  node.dataset.groupKind = "room";
+
+  const header = document.createElement("button");
+  header.type = "button";
+  header.className = "enemy-room-toggle room-group-toggle";
+  header.innerHTML = `
+    <span class="enemy-room-indicator" aria-hidden="true"></span>
+    <span class="enemy-room-title"></span>
+  `;
+  header.querySelector(".enemy-room-indicator").textContent = collapsed ? "\u25ba" : "\u25bc";
+  header.querySelector(".enemy-room-title").textContent = title;
+  header.addEventListener("click", handleGroupHeaderClick);
+
+  node.appendChild(header);
+  return { node, header, title, kind: "room", collapsed, sourceEnemy: null, count: 0, key };
 }
 
 function createGroupNode({ kind, title, key, collapsed, showStats }) {
@@ -1543,6 +1573,17 @@ function syncGroupNode(group) {
     group.statsNode.replaceChildren();
     group.statsNode.hidden = true;
   }
+}
+
+function syncRoomNode(room) {
+  if (!room) return;
+
+  const indicator = room.header.querySelector(".enemy-room-indicator");
+  const titleNode = room.header.querySelector(".enemy-room-title");
+  indicator.textContent = room.collapsed ? "\u25ba" : "\u25bc";
+  titleNode.textContent = room.title;
+  room.header.setAttribute("aria-expanded", room.collapsed ? "false" : "true");
+  room.node.classList.toggle("is-collapsed", room.collapsed);
 }
 
 function createEnemyNode(enemyId) {
