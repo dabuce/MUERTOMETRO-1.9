@@ -222,7 +222,7 @@ function getListInteractionDescriptor(event) {
       node: groupNode,
       id: groupNode.dataset.groupKey,
       groupKind: groupNode.dataset.groupKind || "type",
-      swipeable: groupNode.dataset.groupKind === "room"
+      swipeable: groupNode.dataset.groupKind === "room" || groupNode.dataset.groupKind === "type"
     };
   }
 
@@ -447,6 +447,11 @@ function finalizeSwipeGesture(gesture) {
 
   if (gesture.descriptor.kind === "group" && gesture.descriptor.groupKind === "room") {
     deleteRoom(gesture.descriptor.id);
+    return;
+  }
+
+  if (gesture.descriptor.kind === "group" && gesture.descriptor.groupKind === "type") {
+    deleteEnemyGroup(gesture.descriptor.id);
   }
 }
 
@@ -961,6 +966,11 @@ function clearSelectedEnemyIfNeededForRoom(roomKey) {
   if (selected && getEnemyRoomKey(selected) === roomKey) state.selectedEnemyId = null;
 }
 
+function clearSelectedEnemyIfNeededForGroup(groupKey) {
+  const selected = state.selectedEnemyId ? findEnemy(state.selectedEnemyId) : null;
+  if (selected && getEnemyGroupKey(selected) === groupKey) state.selectedEnemyId = null;
+}
+
 function commitEnemyChange(enemy) {
   if (!enemy) return;
   updateEnemy(enemy);
@@ -1079,6 +1089,16 @@ function clearPendingDamage(enemyId) {
 function clearPendingDamageForRoom(roomKey) {
   const enemyIds = state.enemies
     .filter(enemy => getEnemyRoomKey(enemy) === roomKey)
+    .map(enemy => enemy.id);
+
+  for (const enemyId of enemyIds) {
+    clearPendingDamage(enemyId);
+  }
+}
+
+function clearPendingDamageForGroup(groupKey) {
+  const enemyIds = state.enemies
+    .filter(enemy => getEnemyGroupKey(enemy) === groupKey)
     .map(enemy => enemy.id);
 
   for (const enemyId of enemyIds) {
@@ -1352,6 +1372,28 @@ function deleteRoom(roomKey) {
     label: `Sala ${snapshot[0].roomRef || ""}`.trim(),
     index: firstIndex,
     roomKey,
+    enemies: snapshot
+  });
+}
+
+function deleteEnemyGroup(groupKey) {
+  const groupEnemies = state.enemies.filter(enemy => getEnemyGroupKey(enemy) === groupKey);
+  if (groupEnemies.length === 0) return;
+
+  const firstIndex = state.enemies.findIndex(enemy => getEnemyGroupKey(enemy) === groupKey);
+  const snapshot = groupEnemies.map(cloneEnemy);
+
+  clearSelectedEnemyIfNeededForGroup(groupKey);
+  clearPendingDamageForGroup(groupKey);
+  hideDeleteUndoSnackbar();
+  state.enemies = state.enemies.filter(enemy => getEnemyGroupKey(enemy) !== groupKey);
+  renderList();
+  saveEnemies();
+  showDeleteUndoSnackbar({
+    kind: "group",
+    label: getEnemyGroupTitle(snapshot[0]),
+    index: firstIndex,
+    groupKey,
     enemies: snapshot
   });
 }
@@ -1930,6 +1972,10 @@ function undoDeleteEnemy() {
   } else if (pending.kind === "enemy") {
     const index = clamp(pending.index, 0, state.enemies.length);
     state.enemies.splice(index, 0, cloneEnemy(pending.enemy));
+  } else if (pending.kind === "group") {
+    const index = clamp(pending.index, 0, state.enemies.length);
+    const restored = Array.isArray(pending.enemies) ? pending.enemies.map(cloneEnemy) : [];
+    state.enemies.splice(index, 0, ...restored);
   }
   hideDeleteUndoSnackbar();
   renderList();
@@ -1965,6 +2011,8 @@ async function toggleFullscreen() {
 function renderDeleteUndoSnackbar(payload) {
   if (payload.kind === "room") {
     elements.snackbarMessage.textContent = `${payload.label} eliminada`;
+  } else if (payload.kind === "group") {
+    elements.snackbarMessage.textContent = `Grupo ${payload.label} eliminado`;
   } else {
     elements.snackbarMessage.textContent = `${payload.label} eliminado`;
   }

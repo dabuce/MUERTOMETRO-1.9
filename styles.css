@@ -918,7 +918,8 @@ h1 {
   pointer-events: none;
 }
 
-.enemy.swipe-delete-active {
+.enemy.swipe-delete-active,
+.enemy-group.swipe-delete-active {
   z-index: 2;
   transition: none;
 }
