@@ -400,6 +400,15 @@ function finishListGesture(event) {
     finalizeDragGesture(gesture);
   } else if (gesture.mode === "swipe") {
     finalizeSwipeGesture(gesture);
+  } else if (gesture.descriptor.kind === "group") {
+    cleanupGestureNode(gesture);
+    setClickSuppression(gesture.descriptor.kind, gesture.descriptor.id);
+
+    if (gesture.descriptor.groupKind === "room") {
+      toggleRoomGroupCollapse(gesture.descriptor.id);
+    } else {
+      toggleEnemyGroupCollapse(gesture.descriptor.id);
+    }
   } else {
     cleanupGestureNode(gesture);
   }
@@ -485,6 +494,31 @@ function releaseGesturePointer(gesture, pointerId) {
       // Ignore release failures for nodes that no longer own the pointer.
     }
   }
+}
+
+function handleGroupHeaderClick(event) {
+  const header = event.currentTarget;
+  if (!(header instanceof HTMLButtonElement)) return;
+
+  const groupNode = header.closest(".enemy-group");
+  if (!groupNode) return;
+
+  const clickSuppression = state.clickSuppression;
+  if (clickSuppression && clickSuppression.kind === "group" && clickSuppression.id === groupNode.dataset.groupKey) {
+    clearClickSuppression();
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+
+  if (groupNode.dataset.groupKind === "room") {
+    toggleRoomGroupCollapse(groupNode.dataset.groupKey);
+  } else {
+    toggleEnemyGroupCollapse(groupNode.dataset.groupKey);
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
 }
 
 function syncStateOrderFromDom() {
@@ -621,6 +655,12 @@ elements.list.addEventListener("pointerup", event => {
 });
 
 elements.list.addEventListener("pointercancel", event => {
+  cancelListGesture(event);
+});
+
+elements.list.addEventListener("lostpointercapture", event => {
+  const gesture = state.gesture;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
   cancelListGesture(event);
 });
 
@@ -1434,6 +1474,7 @@ function createGroupNode({ kind, title, key, collapsed, showStats }) {
   `;
   header.querySelector(".enemy-group-indicator").textContent = collapsed ? "\u25ba" : "\u25bc";
   header.querySelector(".enemy-group-title-text").textContent = title;
+  header.addEventListener("click", handleGroupHeaderClick);
   const statsNode = header.querySelector(".enemy-group-stats");
   statsNode.hidden = !showStats;
 
@@ -1559,6 +1600,7 @@ function createEnemyGroupNode(title, groupKey, collapsed) {
   `;
   header.querySelector(".enemy-group-indicator").textContent = collapsed ? "\u25ba" : "\u25bc";
   header.querySelector(".enemy-group-title-text").textContent = title;
+  header.addEventListener("click", handleGroupHeaderClick);
   const statsNode = header.querySelector(".enemy-group-stats");
 
   const rows = document.createElement("div");
