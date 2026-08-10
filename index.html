@@ -48,13 +48,58 @@
           <input id="healthInput" name="enemy-health" type="number" min="1" step="1" inputmode="numeric" placeholder="Vida" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
           <input id="shieldInput" name="enemy-shield" type="number" min="0" step="1" inputmode="numeric" placeholder="Escudo" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
           <input id="quantityInput" name="enemy-quantity" type="number" min="1" max="99" step="1" inputmode="numeric" placeholder="Nº" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <button class="add-button" type="submit">Añadir enemigo</button>
+          <div class="form-actions">
+            <button class="add-button" type="submit">Añadir enemigo</button>
+            <button class="add-scenario-button" id="addScenarioButton" type="button">Añadir escenario</button>
+          </div>
         </form>
       </div>
     </details>
 
     <section class="enemy-list" id="enemyList" aria-live="polite"></section>
   </main>
+
+  <div class="scenario-modal" id="scenarioModal" hidden>
+    <div class="scenario-modal__backdrop" data-scenario-modal-close></div>
+    <section class="scenario-modal__panel" role="dialog" aria-modal="true" aria-labelledby="scenarioModalTitle">
+      <header class="scenario-modal__header">
+        <h2 class="scenario-modal__title" id="scenarioModalTitle">Añadir escenario</h2>
+        <button class="scenario-modal__close" id="scenarioModalClose" type="button" aria-label="Cerrar">×</button>
+      </header>
+      <p class="scenario-modal__description">Selecciona el escenario, la dificultad y el número de jugadores para importar todas las salas de una vez.</p>
+      <form class="scenario-modal__form" id="scenarioForm">
+        <label class="scenario-field">
+          <span class="scenario-field__label">Escenario</span>
+          <select id="scenarioSelect" name="scenario-file" aria-label="Escenario"></select>
+        </label>
+        <label class="scenario-field">
+          <span class="scenario-field__label">Nivel de dificultad</span>
+          <select id="scenarioLevelSelect" name="scenario-level" aria-label="Nivel de dificultad">
+            <option value="0">Nivel 0</option>
+            <option value="1">Nivel 1</option>
+            <option value="2">Nivel 2</option>
+            <option value="3">Nivel 3</option>
+            <option value="4">Nivel 4</option>
+            <option value="5">Nivel 5</option>
+            <option value="6">Nivel 6</option>
+            <option value="7">Nivel 7</option>
+          </select>
+        </label>
+        <label class="scenario-field">
+          <span class="scenario-field__label">Número de jugadores</span>
+          <select id="scenarioPlayersSelect" name="scenario-players" aria-label="Número de jugadores">
+            <option value="2">2 jugadores</option>
+            <option value="3">3 jugadores</option>
+            <option value="4" selected>4 jugadores</option>
+          </select>
+        </label>
+        <div class="scenario-modal__actions">
+          <button class="scenario-modal__cancel" id="scenarioModalCancel" type="button">Cancelar</button>
+          <button class="scenario-modal__confirm" id="scenarioModalConfirm" type="submit">Importar escenario</button>
+        </div>
+      </form>
+    </section>
+  </div>
 
   <div class="undo-snackbar" id="undoSnackbar" role="status" aria-live="polite" aria-atomic="true">
     <span class="undo-snackbar__message" id="undoSnackbarMessage"></span>

@@ -30,7 +30,10 @@ const GROUP_STAT_ICONS = Object.freeze({
 const state = {
   enemies: loadEnemies(),
   monsterLibrary: [],
+  monsterLibraryLoading: null,
   monsterByName: new Map(),
+  scenarioCatalog: [],
+  scenarioCatalogLoading: null,
   nodes: new Map(),
   pendingDamage: new Map(),
   pendingDamageUndo: new Map(),
@@ -55,6 +58,15 @@ const elements = {
   list: document.getElementById("enemyList"),
   template: document.getElementById("enemyTemplate"),
   fullscreen: document.getElementById("fullscreenButton"),
+  addScenarioButton: document.getElementById("addScenarioButton"),
+  scenarioModal: document.getElementById("scenarioModal"),
+  scenarioModalClose: document.getElementById("scenarioModalClose"),
+  scenarioModalCancel: document.getElementById("scenarioModalCancel"),
+  scenarioForm: document.getElementById("scenarioForm"),
+  scenarioSelect: document.getElementById("scenarioSelect"),
+  scenarioLevel: document.getElementById("scenarioLevelSelect"),
+  scenarioPlayers: document.getElementById("scenarioPlayersSelect"),
+  scenarioConfirm: document.getElementById("scenarioModalConfirm"),
   snackbar: document.getElementById("undoSnackbar"),
   snackbarMessage: document.getElementById("undoSnackbarMessage"),
   snackbarUndo: document.getElementById("undoSnackbarUndo")
@@ -66,6 +78,7 @@ const viewportState = {
 
 renderList();
 loadMonsterLibrary();
+loadScenarioCatalog();
 syncEnemyFormAccordionState();
 
 elements.form.addEventListener("submit", event => {
@@ -101,9 +114,20 @@ elements.level.addEventListener("change", () => {
   renderList();
 });
 elements.fullscreen.addEventListener("click", toggleFullscreen);
+elements.addScenarioButton.addEventListener("click", openScenarioModal);
+elements.scenarioModalClose.addEventListener("click", closeScenarioModal);
+elements.scenarioModalCancel.addEventListener("click", closeScenarioModal);
+elements.scenarioModal.addEventListener("click", event => {
+  if (event.target.closest("[data-scenario-modal-close]")) closeScenarioModal();
+});
+elements.scenarioForm.addEventListener("submit", event => {
+  event.preventDefault();
+  importSelectedScenario();
+});
 document.addEventListener("fullscreenchange", syncViewportInsets);
 window.addEventListener("resize", syncViewportInsets);
 window.addEventListener("focusin", handleViewportFocusIn);
+window.addEventListener("keydown", handleGlobalKeydown);
 if (window.visualViewport) {
   window.visualViewport.addEventListener("resize", syncViewportInsets);
   window.visualViewport.addEventListener("scroll", syncViewportInsets);
@@ -189,6 +213,20 @@ elements.list.addEventListener("click", event => {
   const button = event.target.closest("button");
   const enemyNode = event.target.closest(".enemy");
   const enemy = enemyNode ? findEnemy(enemyNode.dataset.id) : null;
+
+  if (button && button.classList.contains("scenario-group-toggle")) {
+    const groupNode = button.closest(".enemy-group");
+    if (!groupNode) return;
+    toggleScenarioGroupCollapse(groupNode.dataset.groupKey);
+    return;
+  }
+
+  if (button && button.classList.contains("room-group-toggle")) {
+    const groupNode = button.closest(".enemy-group");
+    if (!groupNode) return;
+    toggleRoomGroupCollapse(groupNode.dataset.groupKey);
+    return;
+  }
 
   if (button && button.classList.contains("enemy-group-toggle")) {
     const groupNode = button.closest(".enemy-group");
@@ -353,18 +391,139 @@ if ("serviceWorker" in navigator) {
 }
 
 async function loadMonsterLibrary() {
-  try {
-    const response = await fetch(LIBRARY_URL, { cache: "force-cache" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  if (state.monsterLibraryLoading) return state.monsterLibraryLoading;
 
-    const data = await response.json();
-    state.monsterLibrary = Array.isArray(data.monsters) ? data.monsters : [];
-    state.monsterByName = new Map(state.monsterLibrary.map(monster => [normalizeName(monster.name), monster]));
-    renderMonsterSuggestions();
-    fillStatsFromSelection();
-  } catch (error) {
-    console.warn("No se pudo cargar la biblioteca de monstruos.", error);
+  state.monsterLibraryLoading = (async () => {
+    try {
+      const response = await fetch(LIBRARY_URL, { cache: "force-cache" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      state.monsterLibrary = Array.isArray(data.monsters) ? data.monsters : [];
+      state.monsterByName = new Map(state.monsterLibrary.map(monster => [normalizeName(monster.name), monster]));
+      renderMonsterSuggestions();
+      fillStatsFromSelection();
+    } catch (error) {
+      console.warn("No se pudo cargar la biblioteca de monstruos.", error);
+    }
+  })();
+
+  return state.monsterLibraryLoading;
+}
+
+async function loadScenarioCatalog() {
+  if (state.scenarioCatalogLoading) return state.scenarioCatalogLoading;
+
+  state.scenarioCatalogLoading = (async () => {
+    const files = Array.from({ length: 95 }, (_, index) => `data/Escenarios/${String(index + 1).padStart(2, "0")}.json`);
+    const catalog = (await Promise.all(files.map(async file => {
+      try {
+        const response = await fetch(file, { cache: "force-cache" });
+        if (!response.ok) return null;
+
+        const data = await response.json();
+        return {
+          file,
+          fileName: file.split("/").pop(),
+          index: data.index ?? "",
+          name: String(data.name || file.split("/").pop().replace(/\.json$/i, "")),
+          data
+        };
+      } catch (error) {
+        console.warn(`No se pudo cargar el escenario ${file}.`, error);
+        return null;
+      }
+    }))).filter(Boolean);
+
+    state.scenarioCatalog = catalog;
+    renderScenarioSelectOptions();
+  })();
+
+  return state.scenarioCatalogLoading;
+}
+
+function renderScenarioSelectOptions() {
+  if (!elements.scenarioSelect) return;
+
+  if (state.scenarioCatalog.length === 0) {
+    elements.scenarioSelect.replaceChildren(createSelectOption("Cargando escenarios...", "", true, true));
+    elements.scenarioSelect.disabled = true;
+    if (elements.scenarioConfirm) elements.scenarioConfirm.disabled = true;
+    return;
   }
+
+  const options = state.scenarioCatalog.map(entry => {
+    const label = entry.index ? `${entry.index} - ${entry.name}` : entry.name;
+    return createSelectOption(label, entry.file);
+  });
+
+  elements.scenarioSelect.replaceChildren(...options);
+  elements.scenarioSelect.disabled = false;
+  if (elements.scenarioConfirm) elements.scenarioConfirm.disabled = false;
+}
+
+function createSelectOption(label, value, selected = false, disabled = false) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  option.selected = selected;
+  option.disabled = disabled;
+  return option;
+}
+
+function openScenarioModal() {
+  if (!elements.scenarioModal) return;
+
+  if (state.scenarioCatalog.length === 0) {
+    renderScenarioSelectOptions();
+    void loadScenarioCatalog();
+  }
+
+  elements.scenarioLevel.value = elements.level.value;
+  elements.scenarioPlayers.value = "4";
+  if (state.scenarioCatalog.length > 0 && !elements.scenarioSelect.value) {
+    elements.scenarioSelect.value = state.scenarioCatalog[0].file;
+  }
+
+  elements.scenarioModal.hidden = false;
+  document.body.classList.add("scenario-modal-open");
+  if (elements.scenarioConfirm) elements.scenarioConfirm.disabled = state.scenarioCatalog.length === 0;
+  requestAnimationFrame(() => {
+    elements.scenarioSelect.focus();
+  });
+}
+
+function closeScenarioModal() {
+  if (!elements.scenarioModal || elements.scenarioModal.hidden) return;
+
+  elements.scenarioModal.hidden = true;
+  document.body.classList.remove("scenario-modal-open");
+}
+
+function handleGlobalKeydown(event) {
+  if (event.key !== "Escape") return;
+  if (elements.scenarioModal && !elements.scenarioModal.hidden) {
+    event.preventDefault();
+    closeScenarioModal();
+  }
+}
+
+async function importSelectedScenario() {
+  const selectedScenario = state.scenarioCatalog.find(entry => entry.file === elements.scenarioSelect.value);
+  if (!selectedScenario) return;
+
+  await loadMonsterLibrary();
+
+  const level = clamp(toInt(elements.scenarioLevel.value, 0), 0, 7);
+  const players = clamp(toInt(elements.scenarioPlayers.value, 4), 2, 4);
+  const importedEnemies = buildScenarioEnemies(selectedScenario.data, level, players);
+  if (importedEnemies.length === 0) return;
+
+  state.enemies.push(...importedEnemies);
+  normalizeEnemyOrdinals(state.enemies);
+  renderList();
+  saveEnemies();
+  closeScenarioModal();
 }
 
 function renderMonsterSuggestions() {
@@ -459,6 +618,8 @@ function loadEnemies() {
 function normalizeEnemy(enemy, index) {
   const max = toInt(enemy.max, toInt(enemy.vida, 1));
   const storedGroupOrdinal = toInt(enemy.groupOrdinal, NaN);
+  const scenarioId = enemy.scenarioId ? String(enemy.scenarioId) : null;
+  const roomRef = enemy.roomRef ? String(enemy.roomRef) : null;
   return {
     id: enemy.id || `enemy-${Date.now()}-${index}-${Math.random().toString(36).slice(2)}`,
     nombre: String(enemy.nombre || "Enemigo"),
@@ -472,7 +633,13 @@ function normalizeEnemy(enemy, index) {
     groupCollapsed: Boolean(enemy.groupCollapsed),
     level: enemy.level ?? null,
     monsterId: enemy.monsterId || null,
-    libraryStats: enemy.libraryStats && typeof enemy.libraryStats === "object" ? enemy.libraryStats : null
+    libraryStats: enemy.libraryStats && typeof enemy.libraryStats === "object" ? enemy.libraryStats : null,
+    scenarioId,
+    scenarioName: enemy.scenarioName ? String(enemy.scenarioName) : null,
+    roomRef,
+    roomOrder: toInt(enemy.roomOrder, null),
+    roomCollapsed: Boolean(enemy.roomCollapsed),
+    scenarioCollapsed: Boolean(enemy.scenarioCollapsed)
   };
 }
 
@@ -642,12 +809,93 @@ function addEnemies() {
   saveEnemies();
 }
 
+function buildScenarioEnemies(scenario, level, players) {
+  const scenarioId = `scenario-${String(scenario.index || scenario.name || "custom").toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const scenarioName = String(scenario.name || "Escenario");
+  const rooms = Array.isArray(scenario.rooms) ? scenario.rooms : [];
+  const enemies = [];
+
+  rooms.forEach((room, roomIndex) => {
+    const roomRef = String(room?.ref || `Sala ${roomIndex + 1}`).trim();
+    const roomMonsters = Array.isArray(room?.monster) ? room.monster : [];
+    const nextOrdinalsByGroup = new Map();
+
+    roomMonsters.forEach((slot, slotIndex) => {
+      const monsterId = String(slot?.name || "").trim();
+      if (!monsterId) return;
+
+      const monster = state.monsterLibrary.find(entry => entry.id === monsterId || normalizeName(entry.name) === normalizeName(monsterId));
+      if (!monster) {
+        console.warn(`No se encontró el monstruo ${monsterId} para el escenario ${scenarioName}.`);
+        return;
+      }
+
+      const rank = resolveScenarioMonsterRank(slot, players);
+      const stats = getScenarioMonsterStats(monster, level, rank);
+      if (!stats) {
+        console.warn(`No se pudieron obtener estadísticas para ${monsterId} en nivel ${level}.`);
+        return;
+      }
+
+      const displayName = String(monster.name || monsterId);
+      const groupKey = `${scenarioId}|${normalizeName(roomRef)}|${normalizeName(displayName)}`;
+      const ordinal = (nextOrdinalsByGroup.get(groupKey) || 0) + 1;
+      nextOrdinalsByGroup.set(groupKey, ordinal);
+
+      enemies.push({
+        id: `enemy-${Date.now()}-${roomIndex}-${slotIndex}-${Math.random().toString(36).slice(2)}`,
+        nombre: ordinal > 1 ? `${displayName} ${ordinal}` : displayName,
+        groupName: displayName,
+        vida: clamp(toInt(stats.health, 1), 0, Math.max(1, toInt(stats.health, 1))),
+        max: Math.max(1, toInt(stats.health, 1)),
+        escudo: Math.max(0, toInt(stats.shield, 0)),
+        elite: rank === "elite",
+        ordinal,
+        groupOrdinal: ordinal,
+        groupCollapsed: false,
+        level: String(level),
+        monsterId: monster.id,
+        libraryStats: {
+          normal: monster.levels?.[String(level)]?.normal ? { ...monster.levels[String(level)].normal } : null,
+          elite: monster.levels?.[String(level)]?.elite ? { ...monster.levels[String(level)].elite } : null
+        },
+        scenarioId,
+        scenarioName,
+        roomRef,
+        roomOrder: roomIndex + 1,
+        roomCollapsed: false,
+        scenarioCollapsed: false
+      });
+    });
+  });
+
+  return enemies;
+}
+
+function resolveScenarioMonsterRank(slot, players) {
+  const playersKey = `player${players}`;
+  if (slot && typeof slot === "object" && slot[playersKey]) return String(slot[playersKey]).toLowerCase();
+  if (slot && typeof slot === "object" && slot.type) return String(slot.type).toLowerCase();
+
+  return "normal";
+}
+
+function getScenarioMonsterStats(monster, level, rank) {
+  const selectedLevel = String(clamp(toInt(level, 0), 0, 7));
+  const monsterLevel = monster?.levels?.[selectedLevel];
+  if (!monsterLevel) return null;
+
+  const stats = monsterLevel[String(rank).toLowerCase()];
+  return stats && typeof stats === "object" ? stats : null;
+}
+
 function getNextEnemyNumbers(baseName, quantity) {
   const used = new Set();
   const escapedName = escapeRegExp(baseName);
   const numberedName = new RegExp(`^${escapedName}\\s+(\\d+)$`, "i");
 
   state.enemies.forEach(enemy => {
+    if (enemy.scenarioId) return;
     if (normalizeName(getEnemyGroupName(enemy)) !== normalizeName(baseName)) return;
     const match = String(enemy.nombre).match(numberedName);
     if (match) {
@@ -669,7 +917,7 @@ function getNextEnemyNumbers(baseName, quantity) {
 
 function hasNumberedEnemy(baseName) {
   const numberedName = new RegExp(`^${escapeRegExp(baseName)}\\s+\\d+$`, "i");
-  return state.enemies.some(enemy => numberedName.test(String(enemy.nombre)));
+  return state.enemies.some(enemy => !enemy.scenarioId && numberedName.test(String(enemy.nombre)));
 }
 
 function addPendingDamage(enemyId, rawDamage) {
@@ -767,21 +1015,12 @@ function deleteEnemy(enemyId) {
 
 function renderList() {
   const seenIds = new Set();
-  const groups = new Map();
-  const groupOrder = [];
+  const roots = [];
+  const scenarioGroups = new Map();
+  const roomGroups = new Map();
+  const typeGroups = new Map();
 
   state.enemies.forEach(enemy => {
-    const groupKey = getEnemyGroupKey(enemy);
-    let group = groups.get(groupKey);
-    if (!group) {
-      group = createEnemyGroupNode(getEnemyGroupTitle(enemy), groupKey, isGroupCollapsed(groupKey));
-      group.count = 0;
-      group.sourceEnemy = enemy;
-      groups.set(groupKey, group);
-      groupOrder.push(group.node);
-    }
-    group.count += 1;
-
     let node = state.nodes.get(enemy.id);
     if (!node) {
       node = createEnemyNode(enemy.id);
@@ -789,24 +1028,157 @@ function renderList() {
     }
 
     updateEnemy(enemy);
-    if (!group.collapsed) group.rows.appendChild(node);
     seenIds.add(enemy.id);
+
+    if (enemy.scenarioId) {
+      const scenarioGroup = ensureScenarioGroup(enemy, scenarioGroups, roots);
+      const roomGroup = ensureRoomGroup(enemy, scenarioGroup, roomGroups);
+      const typeGroup = ensureScenarioTypeGroup(enemy, roomGroup, typeGroups);
+      typeGroup.rows.appendChild(node);
+      return;
+    }
+
+    const typeGroup = ensureManualTypeGroup(enemy, typeGroups, roots);
+    typeGroup.rows.appendChild(node);
   });
 
-  for (const group of groups.values()) {
-    group.header.querySelector(".enemy-group-indicator").textContent = group.collapsed ? "\u25ba" : "\u25bc";
-    group.header.querySelector(".enemy-group-title-text").textContent = group.title;
-    renderMonsterHeaderStats(group.statsNode, group.sourceEnemy);
-    group.rows.hidden = group.collapsed;
-  }
+  elements.list.replaceChildren(...roots.map(group => group.node));
 
-  elements.list.replaceChildren(...groupOrder);
+  for (const group of [...scenarioGroups.values(), ...roomGroups.values(), ...typeGroups.values()]) {
+    syncGroupNode(group);
+  }
 
   for (const [id, node] of state.nodes) {
     if (seenIds.has(id)) continue;
     node.remove();
     state.nodes.delete(id);
     clearPendingDamage(id);
+  }
+}
+
+function ensureScenarioGroup(enemy, scenarioGroups, roots) {
+  const key = getEnemyScenarioKey(enemy);
+  let group = scenarioGroups.get(key);
+  if (!group) {
+    group = createGroupNode({
+      kind: "scenario",
+      title: getEnemyScenarioTitle(enemy),
+      key,
+      collapsed: isScenarioCollapsed(key),
+      showStats: false
+    });
+    group.roomGroups = new Map();
+    scenarioGroups.set(key, group);
+    roots.push(group);
+  }
+
+  group.sourceEnemy ??= enemy;
+  group.count += 1;
+  return group;
+}
+
+function ensureRoomGroup(enemy, scenarioGroup, roomGroups) {
+  const key = getEnemyRoomKey(enemy);
+  let group = roomGroups.get(key);
+  if (!group) {
+    group = createGroupNode({
+      kind: "room",
+      title: getEnemyRoomTitle(enemy),
+      key,
+      collapsed: isRoomCollapsed(key),
+      showStats: false
+    });
+    group.typeGroups = new Map();
+    roomGroups.set(key, group);
+    scenarioGroup.rows.appendChild(group.node);
+  }
+
+  group.sourceEnemy ??= enemy;
+  group.count += 1;
+  return group;
+}
+
+function ensureScenarioTypeGroup(enemy, roomGroup, typeGroups) {
+  const key = getEnemyGroupKey(enemy);
+  let group = typeGroups.get(key);
+  if (!group) {
+    group = createGroupNode({
+      kind: "type",
+      title: getEnemyGroupTitle(enemy),
+      key,
+      collapsed: isGroupCollapsed(key),
+      showStats: true
+    });
+    typeGroups.set(key, group);
+    roomGroup.rows.appendChild(group.node);
+  }
+
+  group.sourceEnemy ??= enemy;
+  group.count += 1;
+  return group;
+}
+
+function ensureManualTypeGroup(enemy, typeGroups, roots) {
+  const key = getEnemyGroupKey(enemy);
+  let group = typeGroups.get(key);
+  if (!group) {
+    group = createGroupNode({
+      kind: "type",
+      title: getEnemyGroupTitle(enemy),
+      key,
+      collapsed: isGroupCollapsed(key),
+      showStats: true
+    });
+    typeGroups.set(key, group);
+    roots.push(group);
+  }
+
+  group.sourceEnemy ??= enemy;
+  group.count += 1;
+  return group;
+}
+
+function createGroupNode({ kind, title, key, collapsed, showStats }) {
+  const node = document.createElement("article");
+  node.className = `enemy-group enemy-group--${kind}`;
+  node.dataset.groupKey = key;
+  node.dataset.groupKind = kind;
+
+  const header = document.createElement("button");
+  header.type = "button";
+  header.className = `enemy-group-title ${kind === "type" ? "enemy-group-toggle" : `${kind}-group-toggle`}`;
+  header.innerHTML = `
+    <span class="enemy-group-indicator" aria-hidden="true"></span>
+    <span class="enemy-group-title-text"></span>
+    <span class="enemy-group-stats" aria-hidden="true"></span>
+  `;
+  header.querySelector(".enemy-group-indicator").textContent = collapsed ? "\u25ba" : "\u25bc";
+  header.querySelector(".enemy-group-title-text").textContent = title;
+  const statsNode = header.querySelector(".enemy-group-stats");
+  statsNode.hidden = !showStats;
+
+  const rows = document.createElement("div");
+  rows.className = "enemy-group-list";
+
+  node.append(header, rows);
+  return { node, rows, header, statsNode, title, kind, collapsed, sourceEnemy: null, count: 0 };
+}
+
+function syncGroupNode(group) {
+  if (!group) return;
+
+  const indicator = group.header.querySelector(".enemy-group-indicator");
+  const titleNode = group.header.querySelector(".enemy-group-title-text");
+  indicator.textContent = group.collapsed ? "\u25ba" : "\u25bc";
+  titleNode.textContent = group.title;
+  group.header.setAttribute("aria-expanded", group.collapsed ? "false" : "true");
+  group.rows.hidden = group.collapsed;
+
+  if (group.kind === "type") {
+    renderMonsterHeaderStats(group.statsNode, group.sourceEnemy);
+  } else if (group.statsNode) {
+    group.statsNode.replaceChildren();
+    group.statsNode.hidden = true;
   }
 }
 
@@ -919,8 +1291,8 @@ function createEnemyGroupNode(title, groupKey, collapsed) {
 function renderMonsterHeaderStats(target, enemy) {
   if (!target) return;
 
-  const normalStats = getMonsterStatsForCurrentLevel(enemy, false);
-  const eliteStats = getMonsterStatsForCurrentLevel(enemy, true);
+  const normalStats = getMonsterStatsForGroupHeader(enemy, false);
+  const eliteStats = getMonsterStatsForGroupHeader(enemy, true);
   if (!normalStats && !eliteStats) {
     target.replaceChildren();
     target.hidden = true;
@@ -934,6 +1306,19 @@ function renderMonsterHeaderStats(target, enemy) {
 
   target.replaceChildren(...fragments);
   target.hidden = fragments.length === 0;
+}
+
+function getMonsterStatsForGroupHeader(enemy, elite = false) {
+  if (enemy?.scenarioId) {
+    const monster = getMonsterForEnemy(enemy);
+    if (!monster) return getStoredMonsterStats(enemy, elite);
+
+    const level = String(enemy.level ?? "0");
+    const rank = elite ? "elite" : "normal";
+    return monster?.levels?.[level]?.[rank] || getStoredMonsterStats(enemy, elite);
+  }
+
+  return getMonsterStatsForCurrentLevel(enemy, elite);
 }
 
 function buildMonsterStatChip(label, icon, normalValue, eliteValue) {
@@ -1101,11 +1486,31 @@ function getEnemyGroupName(enemy) {
 }
 
 function getEnemyGroupKey(enemy) {
+  if (enemy?.scenarioId) {
+    return `${normalizeName(enemy.scenarioId)}|${normalizeName(enemy.roomRef || "room")}|${normalizeName(getEnemyGroupName(enemy))}`;
+  }
   return normalizeName(getEnemyGroupName(enemy));
 }
 
 function getEnemyGroupTitle(enemy) {
   return getEnemyGroupName(enemy);
+}
+
+function getEnemyScenarioKey(enemy) {
+  return enemy?.scenarioId ? normalizeName(enemy.scenarioId) : null;
+}
+
+function getEnemyScenarioTitle(enemy) {
+  return String(enemy?.scenarioName || "Escenario").trim();
+}
+
+function getEnemyRoomKey(enemy) {
+  if (!enemy?.scenarioId) return null;
+  return `${normalizeName(enemy.scenarioId)}|${normalizeName(enemy.roomRef || "room")}`;
+}
+
+function getEnemyRoomTitle(enemy) {
+  return String(enemy?.roomRef || "Sala").trim();
 }
 
 function isGroupCollapsed(groupKey) {
@@ -1121,6 +1526,40 @@ function setGroupCollapsed(groupKey, collapsed) {
 function toggleEnemyGroupCollapse(groupKey) {
   const nextCollapsed = !isGroupCollapsed(groupKey);
   setGroupCollapsed(groupKey, nextCollapsed);
+  renderList();
+  saveEnemies();
+}
+
+function isRoomCollapsed(roomKey) {
+  return state.enemies.some(enemy => getEnemyRoomKey(enemy) === roomKey && Boolean(enemy.roomCollapsed));
+}
+
+function setRoomCollapsed(roomKey, collapsed) {
+  state.enemies.forEach(enemy => {
+    if (getEnemyRoomKey(enemy) === roomKey) enemy.roomCollapsed = Boolean(collapsed);
+  });
+}
+
+function toggleRoomGroupCollapse(roomKey) {
+  const nextCollapsed = !isRoomCollapsed(roomKey);
+  setRoomCollapsed(roomKey, nextCollapsed);
+  renderList();
+  saveEnemies();
+}
+
+function isScenarioCollapsed(scenarioKey) {
+  return state.enemies.some(enemy => getEnemyScenarioKey(enemy) === scenarioKey && Boolean(enemy.scenarioCollapsed));
+}
+
+function setScenarioCollapsed(scenarioKey, collapsed) {
+  state.enemies.forEach(enemy => {
+    if (getEnemyScenarioKey(enemy) === scenarioKey) enemy.scenarioCollapsed = Boolean(collapsed);
+  });
+}
+
+function toggleScenarioGroupCollapse(scenarioKey) {
+  const nextCollapsed = !isScenarioCollapsed(scenarioKey);
+  setScenarioCollapsed(scenarioKey, nextCollapsed);
   renderList();
   saveEnemies();
 }

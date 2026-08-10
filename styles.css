@@ -38,6 +38,10 @@ body {
   text-size-adjust: 100%;
 }
 
+body.scenario-modal-open {
+  overflow: hidden;
+}
+
 button,
 input,
 select {
@@ -276,10 +280,20 @@ h1 {
   box-shadow: none;
 }
 
-.add-button {
+.form-actions {
   grid-column: 1 / -1;
-  width: 50%;
-  justify-self: center;
+  display: flex;
+  gap: var(--gap);
+}
+
+.form-actions button {
+  width: auto;
+  flex: 1 1 0;
+}
+
+.add-button,
+.add-scenario-button {
+  font-size: 17px;
 }
 
 .monster-search {
@@ -345,7 +359,11 @@ h1 {
 .add-button {
   background: #e8a7b8;
   color: #292929;
-  font-size: 17px;
+}
+
+.add-scenario-button {
+  background: #d9d0b7;
+  color: #292929;
 }
 
 .enemy-list {
@@ -423,6 +441,22 @@ h1 {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
 }
 
+.enemy-group--scenario {
+  gap: 7px;
+  padding: 9px;
+  background: rgba(32, 32, 32, .98);
+  border: 1px solid rgba(220, 195, 125, .12);
+}
+
+.enemy-group--room {
+  margin-left: 8px;
+  background: rgba(40, 40, 40, .96);
+}
+
+.enemy-group--type {
+  margin-left: 8px;
+}
+
 .enemy-group-title {
   display: flex;
   align-items: center;
@@ -452,6 +486,20 @@ h1 {
   flex: 0 0 auto;
   width: 1ch;
   text-align: center;
+}
+
+.enemy-group--scenario > .enemy-group-title {
+  color: #f0d89c;
+  font-size: 19px;
+}
+
+.enemy-group--room > .enemy-group-title {
+  color: var(--text);
+  font-size: 17px;
+}
+
+.enemy-group--type > .enemy-group-title {
+  color: var(--gold);
 }
 
 .enemy-group-stats {
@@ -512,6 +560,113 @@ h1 {
 
 .enemy-group-list[hidden] {
   display: none;
+}
+
+.scenario-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.scenario-modal[hidden] {
+  display: none;
+}
+
+.scenario-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .68);
+  backdrop-filter: blur(2px);
+}
+
+.scenario-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 430px);
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(220, 195, 125, .22);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, .04), transparent 55%),
+    linear-gradient(180deg, #2f2f2f, #222);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .55);
+}
+
+.scenario-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.scenario-modal__title {
+  margin: 0;
+  font-size: 22px;
+  color: var(--text);
+}
+
+.scenario-modal__close {
+  width: 36px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.scenario-modal__description {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.scenario-modal__form {
+  display: grid;
+  gap: 12px;
+}
+
+.scenario-field {
+  display: grid;
+  gap: 6px;
+}
+
+.scenario-field__label {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.scenario-field select {
+  width: 100%;
+}
+
+.scenario-modal__actions {
+  display: flex;
+  gap: var(--gap);
+  margin-top: 4px;
+}
+
+.scenario-modal__actions button {
+  width: auto;
+  flex: 1 1 0;
+}
+
+.scenario-modal__cancel {
+  background: rgba(255, 255, 255, .1);
+  color: var(--text);
+}
+
+.scenario-modal__confirm {
+  background: #e8a7b8;
+  color: #292929;
 }
 
 .enemy {
