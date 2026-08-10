@@ -213,6 +213,19 @@ function handleViewportFocusIn(event) {
 }
 
 function getListInteractionDescriptor(event) {
+  const roomHeader = event.target.closest(".enemy-room-toggle");
+  if (roomHeader) {
+    const roomNode = roomHeader.closest(".enemy-room");
+    if (!roomNode) return null;
+    return {
+      kind: "group",
+      node: roomNode,
+      id: roomNode.dataset.groupKey,
+      groupKind: "room",
+      swipeable: true
+    };
+  }
+
   const groupHeader = event.target.closest(".enemy-group-title");
   if (groupHeader) {
     const groupNode = groupHeader.closest(".enemy-group");
@@ -1584,6 +1597,7 @@ function syncRoomNode(room) {
   titleNode.textContent = room.title;
   room.header.setAttribute("aria-expanded", room.collapsed ? "false" : "true");
   room.node.classList.toggle("is-collapsed", room.collapsed);
+  room.node.hidden = false;
 }
 
 function createEnemyNode(enemyId) {
