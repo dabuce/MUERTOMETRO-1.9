@@ -451,6 +451,19 @@ h1 {
   margin-bottom: 0;
 }
 
+.enemy-room-list {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.enemy-room-list[hidden] {
+  display: none;
+}
+
 .enemy-room-toggle {
   display: grid;
   grid-template-columns: 1.15em minmax(0, 1fr);

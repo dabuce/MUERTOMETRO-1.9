@@ -558,12 +558,15 @@ function collectEnemyIdsFromDomNode(node, orderedIds) {
     return;
   }
 
-  if (!node.classList.contains("enemy-group")) return;
+  const isContainer =
+    node.classList.contains("enemy-group") ||
+    node.classList.contains("enemy-room") ||
+    node.classList.contains("enemy-group-list") ||
+    node.classList.contains("enemy-room-list");
 
-  const rows = Array.from(node.children).find(child => child.classList?.contains("enemy-group-list"));
-  if (!rows) return;
+  if (!isContainer) return;
 
-  for (const child of rows.children) {
+  for (const child of node.children) {
     collectEnemyIdsFromDomNode(child, orderedIds);
   }
 }
@@ -1448,12 +1451,6 @@ function renderList() {
     syncGroupNode(group);
   }
 
-  for (const group of typeGroups.values()) {
-    const roomKey = group.roomKey || null;
-    const room = roomKey ? roomGroups.get(roomKey) : null;
-    group.node.hidden = Boolean(room && room.collapsed);
-  }
-
   for (const [id, node] of state.nodes) {
     if (seenIds.has(id)) continue;
     node.remove();
@@ -1492,9 +1489,8 @@ function ensureScenarioTypeGroup(enemy, roomGroup, typeGroups, roots) {
       collapsed: isGroupCollapsed(key),
       showStats: true
     });
-    group.roomKey = roomGroup.key;
     typeGroups.set(key, group);
-    roots.push(group);
+    roomGroup.body.appendChild(group.node);
   }
 
   group.sourceEnemy ??= enemy;
@@ -1539,8 +1535,11 @@ function createRoomNode({ title, key, collapsed }) {
   header.querySelector(".enemy-room-title").textContent = title;
   header.addEventListener("click", handleGroupHeaderClick);
 
-  node.appendChild(header);
-  return { node, header, title, kind: "room", collapsed, sourceEnemy: null, count: 0, key };
+  const body = document.createElement("div");
+  body.className = "enemy-room-list";
+
+  node.append(header, body);
+  return { node, body, header, title, kind: "room", collapsed, sourceEnemy: null, count: 0, key };
 }
 
 function createGroupNode({ kind, title, key, collapsed, showStats }) {
@@ -1591,13 +1590,14 @@ function syncGroupNode(group) {
 function syncRoomNode(room) {
   if (!room) return;
 
+  room.collapsed = isRoomCollapsed(room.key);
   const indicator = room.header.querySelector(".enemy-room-indicator");
   const titleNode = room.header.querySelector(".enemy-room-title");
   indicator.textContent = room.collapsed ? "\u25ba" : "\u25bc";
   titleNode.textContent = room.title;
   room.header.setAttribute("aria-expanded", room.collapsed ? "false" : "true");
   room.node.classList.toggle("is-collapsed", room.collapsed);
-  room.node.hidden = false;
+  room.body.hidden = room.collapsed;
 }
 
 function createEnemyNode(enemyId) {
