@@ -1,0 +1,231 @@
+{
+  "index": "32",
+  "name": "Decrepit Wood",
+  "flowChartGroup": "voice",
+  "coordinates": {
+    "x": 1618,
+    "y": 1705,
+    "width": 183,
+    "height": 148,
+    "gridLocation": "L-11"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "33",
+    "40"
+  ],
+  "requires": [
+    [
+      "24"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "the-voices-command"
+      ]
+    }
+  ],
+  "monsters": [
+    "black-imp",
+    "deep-terror",
+    "giant-viper",
+    "harrower-infester"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "H2b",
+      "initial": true,
+      "rooms": [
+        2,
+        3
+      ],
+      "monster": [
+        {
+          "name": "deep-terror",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "type": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "A4a",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "deep-terror",
+          "type": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "I1a",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "black-imp",
+          "type": "normal"
+        },
+        {
+          "name": "black-imp",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "black-imp",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "black-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "type": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "type": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "G2b",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "black-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "black-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "player4": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "type": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}

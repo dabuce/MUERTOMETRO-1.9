@@ -1,0 +1,127 @@
+{
+  "index": "54",
+  "name": "Palace of Ice",
+  "flowChartGroup": "personal-quests",
+  "coordinates": {
+    "x": 1236.75,
+    "y": 470,
+    "width": 178,
+    "height": 184,
+    "gridLocation": "D-8"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "rewards": {
+    "events": [
+      "city:59",
+      "road:59"
+    ],
+    "custom": "%data.scenario.rewards.gh.54%",
+    "unlockCharacter": "squidface"
+  },
+  "monsters": [
+    "cave-bear",
+    "frost-demon",
+    "harrower-infester",
+    "living-spirit"
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "alwaysApply": true,
+      "statEffects": [
+        {
+          "identifier": {
+            "type": "monster",
+            "edition": "gh",
+            "name": "cave-bear"
+          },
+          "statEffect": {
+            "actions": [
+              {
+                "type": "condition",
+                "value": "poison"
+              }
+            ]
+          },
+          "note": "%data.scenario.rules.gh.54.1%"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "G2a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "cave-bear",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "N1a",
+      "marker": "1",
+      "treasures": [
+        25
+      ],
+      "monster": [
+        {
+          "name": "frost-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "player2": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "type": "normal"
+        },
+        {
+          "name": "harrower-infester",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

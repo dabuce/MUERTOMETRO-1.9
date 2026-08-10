@@ -1,0 +1,84 @@
+{
+  "index": "34",
+  "name": "Scorched Summit",
+  "flowChartGroup": "dragons",
+  "coordinates": {
+    "x": 524.25,
+    "y": 47,
+    "width": 191,
+    "height": 165,
+    "gridLocation": "A-4"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "25"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!the-drake-aided"
+      ],
+      "party": [
+        "the-drakes-command"
+      ]
+    }
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "the-drake-slain"
+    ],
+    "lostPartyAchievements": [
+      "the-drakes-command"
+    ],
+    "gold": 20,
+    "reputation": 2,
+    "prosperity": 1
+  },
+  "monsters": [
+    "elder-drake",
+    "rending-drake",
+    "spitting-drake"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L2a",
+      "initial": true,
+      "treasures": [
+        23
+      ],
+      "monster": [
+        {
+          "name": "elder-drake",
+          "type": "boss"
+        },
+        {
+          "name": "rending-drake",
+          "type": "elite"
+        },
+        {
+          "name": "rending-drake",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "type": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

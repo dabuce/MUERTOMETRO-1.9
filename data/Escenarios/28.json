@@ -1,0 +1,158 @@
+{
+  "index": "28",
+  "name": "Outer Ritual Chamber",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 532.25,
+    "y": 670,
+    "width": 206,
+    "height": 150,
+    "gridLocation": "E-4"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "29"
+  ],
+  "requires": [
+    [
+      "6"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "dark-bounty"
+      ]
+    }
+  ],
+  "links": [
+    "29"
+  ],
+  "rewards": {
+    "partyAchievements": [
+      "an-invitation"
+    ]
+  },
+  "monsters": [
+    "cultist",
+    "living-bones",
+    "living-corpse:+2",
+    "night-demon",
+    "sun-demon"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1a",
+      "initial": true,
+      "rooms": [
+        2,
+        3
+      ],
+      "monster": [
+        {
+          "name": "cultist",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse:+2",
+          "type": "elite"
+        },
+        {
+          "name": "living-corpse:+2",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse:+2",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "C2b",
+      "treasures": [
+        32
+      ],
+      "monster": [
+        {
+          "name": "night-demon",
+          "type": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "night-demon",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "C1a",
+      "monster": [
+        {
+          "name": "sun-demon",
+          "type": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

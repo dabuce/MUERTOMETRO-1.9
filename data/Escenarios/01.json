@@ -1,0 +1,159 @@
+{
+  "index": "1",
+  "name": "Black Barrow",
+  "flowChartGroup": "intro",
+  "coordinates": {
+    "x": 1434,
+    "y": 975,
+    "width": 182,
+    "height": 140,
+    "gridLocation": "G-10"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "initial": true,
+  "unlocks": [
+    "2"
+  ],
+  "links": [
+    "2"
+  ],
+  "rewards": {
+    "partyAchievements": [
+      "first-steps"
+    ]
+  },
+  "monsters": [
+    "bandit-archer",
+    "bandit-guard",
+    "living-bones"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player2": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "G1b",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player2": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player2": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "I1b",
+      "marker": "1",
+      "treasures": [
+        7
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

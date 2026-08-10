@@ -1,0 +1,185 @@
+{
+  "index": "33",
+  "name": "Savvas Armory",
+  "coordinates": {
+    "x": 945.5,
+    "y": 94,
+    "width": 173,
+    "height": 159,
+    "gridLocation": "A-7"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "24"
+    ],
+    [
+      "25"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "the-voices-command"
+      ]
+    },
+    {
+      "party": [
+        "the-drakes-command"
+      ]
+    }
+  ],
+  "rewards": {
+    "partyAchievements": [
+      "the-voices-treasure",
+      "the-drakes-treasure"
+    ]
+  },
+  "monsters": [
+    "earth-demon",
+    "flame-demon",
+    "frost-demon",
+    "savvas-icestorm",
+    "savvas-lavaflow",
+    "wind-demon"
+  ],
+  "objectives": [
+    {
+      "name": "Door",
+      "health": "4+L",
+      "marker": "b"
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "rooms": [
+        2
+      ],
+      "figures": [
+        {
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Door",
+            "marker": "b"
+          },
+          "type": "dead"
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "once": true,
+      "requiredRooms": [
+        4
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "savvas-lavaflow",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "d"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "A3b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "objectives": [
+        1
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "C2b",
+      "marker": "b",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "savvas-icestorm",
+          "type": "normal"
+        },
+        {
+          "name": "savvas-icestorm",
+          "player4": "normal"
+        },
+        {
+          "name": "savvas-lavaflow",
+          "type": "normal"
+        },
+        {
+          "name": "savvas-lavaflow",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "I1b",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "savvas-icestorm",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "savvas-lavaflow",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "savvas-lavaflow",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "M1a",
+      "marker": "1",
+      "treasures": [
+        "G",
+        "G",
+        "G",
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "flame-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "savvas-icestorm",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}

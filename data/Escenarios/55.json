@@ -1,0 +1,65 @@
+{
+  "index": "55",
+  "name": "Foggy Thicket",
+  "flowChartGroup": "personal-quests",
+  "coordinates": {
+    "x": 656,
+    "y": 980,
+    "width": 176,
+    "height": 157,
+    "gridLocation": "G-5"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "56"
+  ],
+  "links": [
+    "56"
+  ],
+  "rewards": {
+    "collectiveGold": 10
+  },
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "minus1extra:3",
+          "scenarioEffect": true
+        }
+      ]
+    },
+    {
+      "round": "R == 1",
+      "start": true,
+      "randomDungeon": {
+        "monsterCount": 3,
+        "monsterCards": [
+          "554",
+          "558",
+          "560",
+          "564",
+          "567",
+          "571"
+        ],
+        "dungeonCount": 3,
+        "dungeonCards": [
+          "Trail",
+          "Encampment",
+          "Clearing",
+          "Road",
+          "Cabin",
+          "Crossroads"
+        ],
+        "initial": true
+      }
+    }
+  ]
+}

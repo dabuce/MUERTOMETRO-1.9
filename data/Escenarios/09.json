@@ -1,0 +1,131 @@
+{
+  "index": "9",
+  "name": "Diamond Mine",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 235.5,
+    "y": 1713.75,
+    "width": 202,
+    "height": 176,
+    "gridLocation": "L-2"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "11",
+    "12"
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!the-merchant-flees"
+      ]
+    }
+  ],
+  "blocks": [
+    "8"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "the-dead-invade"
+    ],
+    "gold": 20,
+    "prosperity": 1
+  },
+  "monsters": [
+    "hound",
+    "merciless-overseer",
+    "vermling-scout"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "I2a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "type": "elite"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "N1a",
+      "marker": "1",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "merciless-overseer",
+          "type": "boss"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}

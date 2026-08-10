@@ -1,0 +1,231 @@
+{
+  "index": "75",
+  "name": "Overgrown Graveyard",
+  "flowChartGroup": "city-events",
+  "coordinates": {
+    "x": 1851,
+    "y": 997,
+    "width": 200,
+    "height": 130,
+    "gridLocation": "G-12"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requirements": [
+    {
+      "party": [
+        "grave-job"
+      ]
+    }
+  ],
+  "rewards": {
+    "gold": 60
+  },
+  "monsters": [
+    "bloated-regent",
+    "living-bones",
+    "living-corpse",
+    "living-spirit"
+  ],
+  "objectives": [
+    {
+      "name": "Grave",
+      "health": "1+C",
+      "marker": "a",
+      "count": 4
+    },
+    {
+      "name": "Grave",
+      "health": "1+C",
+      "marker": "b",
+      "count": 4
+    },
+    {
+      "name": "Grave",
+      "health": "1+C",
+      "marker": "c"
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Grave",
+            "marker": "a"
+          },
+          "type": "dead"
+        }
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "living-corpse",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "count": "F",
+          "marker": "a"
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Grave",
+            "marker": "b"
+          },
+          "type": "dead"
+        }
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "living-corpse",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "count": "F",
+          "marker": "b"
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "requiredRooms": [
+        3
+      ],
+      "figures": [
+        {
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Grave",
+            "marker": "c"
+          },
+          "type": "dead"
+        }
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "bloated-regent",
+            "type": "boss"
+          },
+          "marker": "c"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "G1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ],
+      "objectives": [
+        1,
+        2
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "L1b",
+      "rooms": [
+        3
+      ],
+      "treasures": [
+        53
+      ],
+      "monster": [
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "type": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "B1b",
+      "marker": "1",
+      "monster": [
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        3
+      ]
+    }
+  ]
+}

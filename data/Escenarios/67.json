@@ -1,0 +1,146 @@
+{
+  "index": "67",
+  "name": "Arcane Library",
+  "flowChartGroup": "random-scenarios",
+  "coordinates": {
+    "x": 231,
+    "y": 1518,
+    "width": 193,
+    "height": 164,
+    "gridLocation": "K-2"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "random": true,
+  "rewards": {
+    "globalAchievements": [
+      "ancient-technology"
+    ],
+    "items": [
+      "132"
+    ]
+  },
+  "monsters": [
+    "cave-bear",
+    "forest-imp",
+    "stone-golem:+1"
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "requiredRooms": [
+        3
+      ],
+      "alwaysApply": true,
+      "statEffects": [
+        {
+          "identifier": {
+            "type": "monster",
+            "edition": "gh",
+            "name": "stone-golem"
+          },
+          "statEffect": {
+            "name": "arcane-golem",
+            "health": "HxC"
+          },
+          "note": "%data.scenario.rules.gh.67.1%"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L3a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "type": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "type": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "type": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "A2a",
+      "marker": "1",
+      "rooms": [
+        3
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "M1a",
+      "marker": "2",
+      "treasures": [
+        14
+      ],
+      "monster": [
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem:+1",
+          "type": "elite"
+        }
+      ]
+    }
+  ]
+}

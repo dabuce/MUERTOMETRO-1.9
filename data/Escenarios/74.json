@@ -1,0 +1,202 @@
+{
+  "index": "74",
+  "name": "Merchant Ship",
+  "flowChartGroup": "city-events",
+  "coordinates": {
+    "x": 2050.25,
+    "y": 1324,
+    "width": 234,
+    "height": 172,
+    "gridLocation": "I-14"
+  },
+  "edition": "gh",
+  "requirements": [
+    {
+      "party": [
+        "high-sea-escort"
+      ]
+    }
+  ],
+  "rewards": {
+    "gold": 10,
+    "prosperity": 2
+  },
+  "monsters": [
+    "bandit-archer",
+    "bandit-guard",
+    "deep-terror",
+    "lurker"
+  ],
+  "rules": [
+    {
+      "round": "R % 2 == 0 || C > 2",
+      "note": "%data.scenario.rules.gh.74.1%"
+    },
+    {
+      "round": "R == 3",
+      "rooms": [
+        2
+      ]
+    },
+    {
+      "round": "R == 6",
+      "rooms": [
+        3
+      ]
+    },
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "requiredRooms": [
+        2
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "deep-terror",
+            "player2": "normal",
+            "player3": "elite"
+          },
+          "marker": "a"
+        },
+        {
+          "monster": {
+            "name": "deep-terror",
+            "player4": "normal"
+          },
+          "count": 2,
+          "marker": "b"
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "requiredRooms": [
+        3
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "deep-terror",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "count": 2,
+          "marker": "c"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "B1a",
+      "initial": true,
+      "rooms": [
+        2,
+        3
+      ],
+      "monster": [
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "deep-terror",
+          "player2": "normal",
+          "player3": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player4": "normal"
+        },
+        {
+          "name": "deep-terror",
+          "player4": "normal"
+        },
+        {
+          "name": "lurker",
+          "type": "elite"
+        },
+        {
+          "name": "lurker",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "I2b",
+      "marker": "1",
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "lurker",
+          "type": "normal"
+        },
+        {
+          "name": "lurker",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "I1a",
+      "marker": "2",
+      "treasures": [
+        20
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "lurker",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "lurker",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}

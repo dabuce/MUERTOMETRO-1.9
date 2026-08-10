@@ -1,0 +1,146 @@
+{
+  "index": "5",
+  "name": "Ruinous Crypt",
+  "flowChartGroup": "demon-and-rift",
+  "coordinates": {
+    "x": 849.5,
+    "y": 539,
+    "width": 182,
+    "height": 166,
+    "gridLocation": "D-6"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "10",
+    "14",
+    "19"
+  ],
+  "links": [
+    "10"
+  ],
+  "monsters": [
+    "cultist",
+    "flame-demon",
+    "frost-demon",
+    "living-bones",
+    "night-demon"
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "gainCondition",
+          "value": "disarm",
+          "scenarioEffect": true
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1a",
+      "initial": true,
+      "rooms": [
+        2,
+        3
+      ],
+      "monster": [
+        {
+          "name": "cultist",
+          "type": "normal"
+        },
+        {
+          "name": "cultist",
+          "type": "normal"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "K1a",
+      "treasures": [
+        28
+      ],
+      "monster": [
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "type": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "K2b",
+      "treasures": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "type": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "index": "51",
+  "name": "The Void",
+  "coordinates": {
+    "x": 2256.5,
+    "y": 132,
+    "width": 151,
+    "height": 151,
+    "gridLocation": "A-15"
+  },
+  "edition": "gh",
+  "requirements": [
+    {
+      "global": [
+        "end-of-corruption:3"
+      ]
+    }
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "end-of-gloom"
+    ],
+    "reputation": 5,
+    "prosperity": 5,
+    "events": [
+      "city:81",
+      "road:69"
+    ]
+  },
+  "monsters": [
+    "the-gloom"
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "curse:3",
+          "scenarioEffect": true
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "always": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "characterWithSummon",
+            "name": ".*"
+          },
+          "type": "damage",
+          "value": "2"
+        }
+      ],
+      "alwaysApplyTurn": "after"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "D1a",
+      "initial": true,
+      "treasures": [
+        56
+      ],
+      "monster": [
+        {
+          "name": "the-gloom",
+          "type": "boss"
+        }
+      ]
+    }
+  ]
+}

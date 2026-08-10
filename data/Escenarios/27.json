@@ -1,0 +1,243 @@
+{
+  "index": "27",
+  "name": "Ruinous Rift",
+  "flowChartGroup": "demon-and-rift",
+  "coordinates": {
+    "x": 879.5,
+    "y": 643,
+    "width": 177,
+    "height": 108,
+    "gridLocation": "E-6"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "19"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!artifact-lost"
+      ],
+      "party": [
+        "stonebreakers-censer"
+      ]
+    }
+  ],
+  "blocks": [
+    "10",
+    "21",
+    "35",
+    "36"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "the-rift-neutralized"
+    ],
+    "gold": 100,
+    "prosperity": 1,
+    "hints": {
+      "gold": "This money must immediately be spent on enhancements"
+    }
+  },
+  "monsters": [
+    "earth-demon",
+    "flame-demon",
+    "frost-demon",
+    "night-demon",
+    "sun-demon",
+    "wind-demon"
+  ],
+  "objectives": [
+    {
+      "name": "Hail",
+      "escort": true,
+      "health": "4+(2xL)",
+      "marker": "a"
+    }
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "spawns": [
+        {
+          "monster": {
+            "name": "night-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "b"
+        }
+      ]
+    },
+    {
+      "round": "R == 2",
+      "spawns": [
+        {
+          "monster": {
+            "name": "wind-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "c"
+        }
+      ]
+    },
+    {
+      "round": "R == 3 || R == 9",
+      "spawns": [
+        {
+          "monster": {
+            "name": "frost-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "d"
+        },
+        {
+          "monster": {
+            "name": "sun-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "e"
+        }
+      ]
+    },
+    {
+      "round": "R == 4",
+      "spawns": [
+        {
+          "monster": {
+            "name": "earth-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "b"
+        },
+        {
+          "monster": {
+            "name": "flame-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "c"
+        }
+      ]
+    },
+    {
+      "round": "R == 5",
+      "spawns": [
+        {
+          "monster": {
+            "name": "night-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "d"
+        },
+        {
+          "monster": {
+            "name": "wind-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "e"
+        }
+      ]
+    },
+    {
+      "round": "R == 6",
+      "spawns": [
+        {
+          "monster": {
+            "name": "frost-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "b"
+        },
+        {
+          "monster": {
+            "name": "sun-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "c"
+        }
+      ]
+    },
+    {
+      "round": "R == 7",
+      "spawns": [
+        {
+          "monster": {
+            "name": "earth-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "d"
+        },
+        {
+          "monster": {
+            "name": "flame-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "e"
+        }
+      ]
+    },
+    {
+      "round": "R == 8",
+      "spawns": [
+        {
+          "monster": {
+            "name": "night-demon",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "b"
+        },
+        {
+          "monster": {
+            "name": "wind-demon",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "c"
+        }
+      ]
+    },
+    {
+      "round": "R == 10",
+      "finish": "won"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1a",
+      "initial": true,
+      "objectives": [
+        1
+      ]
+    }
+  ]
+}

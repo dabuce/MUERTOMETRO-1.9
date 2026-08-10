@@ -1,0 +1,157 @@
+{
+  "index": "49",
+  "name": "Rebel's Stand",
+  "flowChartGroup": "rebellion-rises",
+  "coordinates": {
+    "x": 984.5,
+    "y": 2011.5,
+    "width": 194,
+    "height": 164,
+    "gridLocation": "N-7"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "35"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "city-rule-demonic"
+      ]
+    }
+  ],
+  "blocks": [
+    "50"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "annihilation-of-order"
+    ],
+    "gold": 50,
+    "reputation": -3
+  },
+  "monsters": [
+    "city-archer",
+    "city-guard",
+    "giant-viper",
+    "siege-cannon"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "G1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "type": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "L1b",
+      "marker": "1",
+      "treasures": [
+        44
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-archer",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "siege-cannon",
+          "type": "boss"
+        }
+      ]
+    }
+  ]
+}

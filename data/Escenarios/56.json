@@ -1,0 +1,217 @@
+{
+  "index": "56",
+  "name": "Bandit's Wood",
+  "flowChartGroup": "personal-quests",
+  "coordinates": {
+    "x": 533.25,
+    "y": 1017,
+    "width": 182,
+    "height": 166,
+    "gridLocation": "G-4"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "rewards": {
+    "gold": 10,
+    "reputation": 2,
+    "custom": "%data.scenario.rewards.gh.56%",
+    "unlockCharacter": "angry-face"
+  },
+  "monsters": [
+    "bandit-archer",
+    "bandit-guard",
+    "hound",
+    "rending-drake"
+  ],
+  "objectives": [
+    {
+      "name": "Captive Orchid",
+      "escort": true,
+      "health": "4+(2xL)",
+      "initiative": 50,
+      "marker": "a",
+      "count": 3,
+      "actions": [
+        {
+          "type": "move",
+          "value": 3
+        },
+        {
+          "type": "attack",
+          "value": 3
+        }
+      ],
+      "allyDeck": true
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "requiredRooms": [
+        4
+      ],
+      "figures": [
+        {
+          "identifier": {
+            "type": "objective",
+            "edition": "escort",
+            "name": "Captive Orchid",
+            "marker": "a"
+          },
+          "type": "dead"
+        }
+      ],
+      "finish": "lost"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L3a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "hound",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "C2a",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "rending-drake",
+          "type": "normal"
+        },
+        {
+          "name": "rending-drake",
+          "type": "normal"
+        },
+        {
+          "name": "rending-drake",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "A4a",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "bandit-guard",
+          "type": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "rending-drake",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "M1b",
+      "marker": "1",
+      "treasures": [
+        45
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "type": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "type": "normal"
+        }
+      ],
+      "objectives": [
+        1,
+        1,
+        1
+      ]
+    }
+  ]
+}

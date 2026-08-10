@@ -1,0 +1,178 @@
+{
+  "index": "81",
+  "name": "Temple of the Eclipse",
+  "flowChartGroup": "city-events",
+  "coordinates": {
+    "x": 253,
+    "y": 524,
+    "width": 202,
+    "height": 168,
+    "gridLocation": "D-2"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "rewards": {
+    "experience": 10
+  },
+  "monsters": [
+    "ancient-artillery",
+    "night-demon",
+    "stone-golem",
+    "sun-demon",
+    "the-colorless"
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "start": true,
+      "elements": [
+        {
+          "type": "light",
+          "state": "strong"
+        },
+        {
+          "type": "dark",
+          "state": "strong"
+        },
+        {
+          "type": "fire",
+          "state": "inert"
+        },
+        {
+          "type": "ice",
+          "state": "inert"
+        },
+        {
+          "type": "air",
+          "state": "inert"
+        },
+        {
+          "type": "earth",
+          "state": "inert"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "J2a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "night-demon",
+          "player3": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player2": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player2": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "J1a",
+      "rooms": [
+        3
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "ancient-artillery",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "ancient-artillery",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "ancient-artillery",
+          "player3": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "D1a",
+      "marker": "1",
+      "treasures": [
+        68
+      ],
+      "monster": [
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "the-colorless",
+          "type": "boss"
+        }
+      ]
+    }
+  ]
+}

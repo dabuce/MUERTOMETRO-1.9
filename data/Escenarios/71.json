@@ -1,0 +1,187 @@
+{
+  "index": "71",
+  "name": "Windswept Highlands",
+  "flowChartGroup": "random-scenarios",
+  "coordinates": {
+    "x": 782.5,
+    "y": 1645,
+    "width": 234,
+    "height": 164,
+    "gridLocation": "K-5"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "random": true,
+  "rewards": {
+    "items": [
+      "41:2"
+    ]
+  },
+  "monsters": [
+    "spitting-drake",
+    "sun-demon",
+    "wind-demon"
+  ],
+  "rules": [
+    {
+      "round": "R % 4 == 1",
+      "note": "%data.scenario.rules.gh.71.1%"
+    },
+    {
+      "round": "R % 4 == 2",
+      "note": "%data.scenario.rules.gh.71.2%"
+    },
+    {
+      "round": "R % 4 == 3",
+      "note": "%data.scenario.rules.gh.71.3%"
+    },
+    {
+      "round": "R % 4 == 0",
+      "note": "%data.scenario.rules.gh.71.4%"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "A4a",
+      "initial": true,
+      "rooms": [
+        2,
+        3,
+        4
+      ],
+      "treasures": [
+        "G",
+        "G",
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "spitting-drake",
+          "type": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "type": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "type": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "type": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "type": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "type": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "A3a",
+      "marker": "c",
+      "monster": [
+        {
+          "name": "sun-demon",
+          "player2": "elite",
+          "player3": "elite"
+        },
+        {
+          "name": "sun-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "sun-demon",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "G2a",
+      "marker": "d",
+      "monster": [
+        {
+          "name": "wind-demon",
+          "player2": "elite"
+        },
+        {
+          "name": "wind-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "wind-demon",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "A2b",
+      "marker": "b",
+      "monster": [
+        {
+          "name": "wind-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "wind-demon",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

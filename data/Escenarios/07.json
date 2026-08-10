@@ -1,0 +1,204 @@
+{
+  "index": "7",
+  "name": "Vibrant Grotto",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 1788,
+    "y": 402,
+    "width": 184,
+    "height": 155,
+    "gridLocation": "C-12"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "20"
+  ],
+  "requires": [
+    [
+      "14",
+      "8"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "the-power-of-enhancement",
+        "the-merchant-flees"
+      ]
+    }
+  ],
+  "monsters": [
+    "cave-bear",
+    "earth-demon",
+    "forest-imp",
+    "inox-shaman"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1b",
+      "initial": true,
+      "rooms": [
+        2,
+        6
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "type": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "C2a",
+      "rooms": [
+        3
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "G2a",
+      "rooms": [
+        4,
+        5
+      ],
+      "monster": [
+        {
+          "name": "forest-imp",
+          "type": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        },
+        {
+          "name": "inox-shaman",
+          "type": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "B4b",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "F1b",
+      "rooms": [
+        3,
+        6
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "earth-demon",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 6,
+      "ref": "D2b",
+      "rooms": [
+        5
+      ],
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "forest-imp",
+          "type": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

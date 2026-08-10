@@ -1,0 +1,140 @@
+{
+  "index": "15",
+  "name": "Shrine of Strength",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 1584,
+    "y": 307,
+    "width": 202,
+    "height": 177,
+    "gridLocation": "B-11"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "rewards": {
+    "experience": 20
+  },
+  "monsters": [
+    "frost-demon",
+    "harrower-infester",
+    "savvas-icestorm",
+    "stone-golem",
+    "wind-demon"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "savvas-icestorm",
+          "type": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "D1a",
+      "rooms": [
+        3,
+        4,
+        5
+      ],
+      "monster": [
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "savvas-icestorm",
+          "type": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "wind-demon",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "H3b",
+      "marker": "a",
+      "monster": [
+        {
+          "name": "harrower-infester",
+          "type": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "H1b",
+      "marker": "a",
+      "monster": [
+        {
+          "name": "harrower-infester",
+          "type": "elite"
+        },
+        {
+          "name": "harrower-infester",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "C1a",
+      "marker": "b",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "stone-golem",
+          "type": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "type": "elite"
+        }
+      ]
+    }
+  ]
+}

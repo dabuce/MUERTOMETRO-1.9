@@ -1,0 +1,246 @@
+{
+  "index": "42",
+  "name": "Realm of the Voice",
+  "flowChartGroup": "voice",
+  "coordinates": {
+    "x": 590.5,
+    "y": 328,
+    "width": 213,
+    "height": 176,
+    "gridLocation": "C-5"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "30"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!the-voice-freed"
+      ],
+      "party": [
+        "the-scepter-and-the-voice"
+      ]
+    }
+  ],
+  "blocks": [
+    "30",
+    "32",
+    "40",
+    "41"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "the-voice-silenced"
+    ],
+    "lostPartyAchievements": [
+      "the-voices-command"
+    ]
+  },
+  "monsters": [
+    "living-spirit",
+    "night-demon",
+    "wind-demon"
+  ],
+  "objectives": [
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "1"
+    },
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "2"
+    },
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "3"
+    },
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "4"
+    },
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "5"
+    },
+    {
+      "name": "Vocal Cord",
+      "health": "[Math.floor(2+(LxC/2))]",
+      "marker": "6"
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.1%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "1"
+          }
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.2%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "2"
+          }
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.3%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "3"
+          }
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.4%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "4"
+          }
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.5%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "5"
+          }
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "note": "%data.scenario.rules.gh.42.6%",
+      "figures": [
+        {
+          "type": "present",
+          "identifier": {
+            "type": "objective",
+            "edition": "objective",
+            "name": "Vocal Cord",
+            "marker": "6"
+          }
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "J1b",
+      "initial": true,
+      "treasures": [
+        30,
+        55
+      ],
+      "monster": [
+        {
+          "name": "living-spirit",
+          "type": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        },
+        {
+          "name": "night-demon",
+          "type": "normal"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "night-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "type": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ]
+}

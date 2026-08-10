@@ -1,0 +1,159 @@
+{
+  "index": "39",
+  "name": "Treacherous Divide",
+  "flowChartGroup": "atop-mountains",
+  "coordinates": {
+    "x": 1556.25,
+    "y": 192.5,
+    "width": 202,
+    "height": 148,
+    "gridLocation": "B-11"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "15",
+    "46"
+  ],
+  "links": [
+    "46"
+  ],
+  "rewards": {
+    "partyAchievements": [
+      "across-the-divide"
+    ],
+    "experience": 10
+  },
+  "monsters": [
+    "cave-bear",
+    "cultist",
+    "frost-demon",
+    "living-bones",
+    "spitting-drake"
+  ],
+  "objectives": [
+    {
+      "name": "Altar",
+      "health": "6+(CxL)",
+      "marker": "a"
+    }
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "curse:3",
+          "scenarioEffect": true
+        }
+      ]
+    },
+    {
+      "round": "true",
+      "start": true,
+      "elements": [
+        {
+          "type": "ice",
+          "state": "strong"
+        },
+        {
+          "type": "fire",
+          "state": "inert"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "N1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "treasures": [
+        73
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "cave-bear",
+          "player4": "normal"
+        },
+        {
+          "name": "cultist",
+          "type": "elite"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "type": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "spitting-drake",
+          "type": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "type": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "D2b",
+      "marker": "1",
+      "monster": [
+        {
+          "name": "frost-demon",
+          "type": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        1
+      ]
+    }
+  ]
+}

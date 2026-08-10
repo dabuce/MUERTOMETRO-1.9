@@ -1,0 +1,282 @@
+{
+  "index": "12",
+  "name": "Gloomhaven Square B",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 2380.5,
+    "y": 288,
+    "width": 182,
+    "height": 159,
+    "gridLocation": "B-16"
+  },
+  "edition": "gh",
+  "unlocks": [
+    "16",
+    "18",
+    "28"
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!end-of-the-invasion"
+      ]
+    }
+  ],
+  "blocks": [
+    "11"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "end-of-the-invasion"
+    ],
+    "reputation": 4,
+    "itemDesigns": [
+      "113"
+    ]
+  },
+  "monsters": [
+    "city-archer",
+    "city-guard",
+    "cultist",
+    "jekserah",
+    "living-bones",
+    "living-corpse"
+  ],
+  "allies": [
+    "city-archer",
+    "city-guard"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "E1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "L1a",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player2": "elite",
+          "player3": "normal"
+        },
+        {
+          "name": "cultist",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "elite"
+        },
+        {
+          "name": "living-bones",
+          "type": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "H1b",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "cultist",
+          "type": "elite"
+        },
+        {
+          "name": "cultist",
+          "type": "elite"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "D1a",
+      "marker": "1",
+      "treasures": [
+        34
+      ],
+      "monster": [
+        {
+          "name": "jekserah",
+          "type": "boss"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

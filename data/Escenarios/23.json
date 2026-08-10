@@ -1,0 +1,180 @@
+{
+  "index": "23",
+  "name": "Deep Ruins",
+  "flowChartGroup": "sewers",
+  "coordinates": {
+    "x": 2279.5,
+    "y": 425,
+    "width": 161,
+    "height": 139,
+    "gridLocation": "C-15"
+  },
+  "edition": "gh",
+  "unlocks": [
+    "26"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "ancient-technology"
+    ],
+    "partyAchievements": [
+      "through-the-ruins"
+    ]
+  },
+  "monsters": [
+    "ancient-artillery",
+    "living-bones",
+    "living-spirit",
+    "stone-golem"
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "minus1extra:3",
+          "scenarioEffect": true
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "I1b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "treasures": [
+        39,
+        72
+      ],
+      "monster": [
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "player4": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "K2b",
+      "marker": "1",
+      "rooms": [
+        3,
+        4
+      ],
+      "monster": [
+        {
+          "name": "ancient-artillery",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "ancient-artillery",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "M1a",
+      "monster": [
+        {
+          "name": "ancient-artillery",
+          "type": "elite"
+        },
+        {
+          "name": "ancient-artillery",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "D1a",
+      "monster": [
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "type": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

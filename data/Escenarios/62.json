@@ -1,0 +1,104 @@
+{
+  "index": "62",
+  "name": "Pit of Souls",
+  "flowChartGroup": "personal-quests",
+  "coordinates": {
+    "x": 1678,
+    "y": 2137,
+    "width": 172,
+    "height": 155,
+    "gridLocation": "O-11"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "rewards": {
+    "experience": 10,
+    "custom": "%data.scenario.rewards.gh.62%",
+    "unlockCharacter": "eclipse"
+  },
+  "monsters": [
+    "hungry-soul",
+    "living-bones",
+    "living-spirit"
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "start": true,
+      "spawns": [
+        {
+          "monster": {
+            "name": "living-bones",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          },
+          "marker": "a"
+        },
+        {
+          "monster": {
+            "name": "living-bones",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          },
+          "marker": "b"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "B2b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "treasures": [
+        59
+      ],
+      "monster": [
+        {
+          "name": "living-bones",
+          "type": "elite"
+        },
+        {
+          "name": "living-bones",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player3": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "marker": "1",
+      "monster": [
+        {
+          "name": "hungry-soul",
+          "type": "boss"
+        }
+      ]
+    }
+  ]
+}

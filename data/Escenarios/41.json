@@ -1,0 +1,142 @@
+{
+  "index": "41",
+  "name": "Timeworn Tomb",
+  "flowChartGroup": "voice",
+  "coordinates": {
+    "x": 1880.25,
+    "y": 813,
+    "width": 191,
+    "height": 137,
+    "gridLocation": "F-13"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requires": [
+    [
+      "24"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "the-voices-command"
+      ]
+    }
+  ],
+  "blocks": [
+    "42"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "the-voice-freed"
+    ],
+    "gold": 50,
+    "experience": 25,
+    "prosperity": 2,
+    "battleGoals": 2
+  },
+  "monsters": [
+    "ancient-artillery",
+    "living-corpse",
+    "living-spirit",
+    "stone-golem"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "type": "normal"
+        },
+        {
+          "name": "ancient-artillery",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "ancient-artillery",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "L1a",
+      "marker": "1",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "living-corpse",
+          "type": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "E1a",
+      "marker": "2",
+      "treasures": [
+        24
+      ],
+      "monster": [
+        {
+          "name": "living-spirit",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-spirit",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "type": "elite"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "index": "92",
+  "name": "Back Alley Brawl",
+  "flowChartGroup": "city-events",
+  "coordinates": {
+    "x": 2075.75,
+    "y": 347,
+    "width": 179,
+    "height": 119,
+    "gridLocation": "C-14"
+  },
+  "edition": "gh",
+  "requirements": [
+    {
+      "party": [
+        "Dept Collection"
+      ]
+    }
+  ],
+  "rewards": {
+    "gold": 10,
+    "reputation": -3
+  },
+  "monsters": [
+    "bandit-archer",
+    "bandit-guard",
+    "city-archer",
+    "city-guard",
+    "earth-demon",
+    "flame-demon",
+    "inox-guard",
+    "savvas-lavaflow"
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "rooms": [
+        2
+      ],
+      "spawns": [
+        {
+          "monster": {
+            "name": "city-archer",
+            "player2": "normal",
+            "player3": "elite",
+            "player4": "elite"
+          }
+        },
+        {
+          "monster": {
+            "name": "city-guard",
+            "type": "normal"
+          }
+        },
+        {
+          "monster": {
+            "name": "city-guard",
+            "player2": "normal",
+            "player3": "normal",
+            "player4": "elite"
+          }
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "H3b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-archer",
+          "type": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "type": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player4": "normal"
+        },
+        {
+          "name": "inox-guard",
+          "type": "elite"
+        },
+        {
+          "name": "inox-guard",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "F1a",
+      "marker": "1",
+      "monster": [
+        {
+          "name": "bandit-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "bandit-guard",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "bandit-guard",
+          "player4": "normal"
+        },
+        {
+          "name": "inox-guard",
+          "type": "elite"
+        },
+        {
+          "name": "inox-guard",
+          "player4": "normal"
+        },
+        {
+          "name": "savvas-lavaflow",
+          "type": "elite"
+        }
+      ]
+    }
+  ]
+}

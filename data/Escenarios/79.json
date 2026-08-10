@@ -1,0 +1,130 @@
+{
+  "index": "79",
+  "name": "Lost Temple",
+  "flowChartGroup": "city-events",
+  "coordinates": {
+    "x": 1804,
+    "y": 1537,
+    "width": 172,
+    "height": 132,
+    "gridLocation": "K-12"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requirements": [
+    {
+      "party": [
+        "fishs-aid"
+      ]
+    }
+  ],
+  "rewards": {
+    "gold": 15
+  },
+  "monsters": [
+    "giant-viper",
+    "stone-golem",
+    "the-betrayer"
+  ],
+  "objectives": [
+    {
+      "name": "Fish",
+      "escort": true,
+      "health": "6+2xL",
+      "actions": [
+        {
+          "type": "custom",
+          "value": "%data.scenario.rules.gh.79.1%",
+          "small": true,
+          "subActions": [
+            {
+              "type": "attack",
+              "value": 3,
+              "subActions": [
+                {
+                  "type": "specialTarget",
+                  "value": "enemiesAdjacent",
+                  "small": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "allyDeck": true
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "once": true,
+      "rooms": [
+        2
+      ],
+      "figures": [
+        {
+          "identifier": {
+            "type": "monster",
+            "edition": "gh",
+            "name": "stone-golem"
+          },
+          "type": "killed",
+          "value": "all"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "K1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "stone-golem",
+          "type": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "type": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "stone-golem",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        1
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "C2b",
+      "marker": "1",
+      "treasures": [
+        52
+      ],
+      "monster": [
+        {
+          "name": "the-betrayer",
+          "type": "boss"
+        }
+      ]
+    }
+  ]
+}

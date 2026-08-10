@@ -1,0 +1,166 @@
+{
+  "index": "84",
+  "name": "Crystalline Cave",
+  "flowChartGroup": "sealed",
+  "coordinates": {
+    "x": 1807,
+    "y": 580,
+    "width": 186,
+    "height": 132,
+    "gridLocation": "D-12"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "requirements": [
+    {
+      "party": [
+        "tremors"
+      ]
+    }
+  ],
+  "rewards": {
+    "prosperity": 1,
+    "items": [
+      "133"
+    ]
+  },
+  "monsters": [
+    "earth-demon",
+    "flame-demon",
+    "frost-demon"
+  ],
+  "objectives": [
+    {
+      "name": "The Crystal",
+      "escort": true,
+      "health": "4+C+(2xL)",
+      "marker": "a"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L2a",
+      "initial": true,
+      "rooms": [
+        2,
+        3,
+        4
+      ],
+      "monster": [
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ],
+      "objectives": [
+        1
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "A3a",
+      "marker": "b",
+      "monster": [
+        {
+          "name": "earth-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "earth-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "type": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "E1b",
+      "marker": "d",
+      "treasures": [
+        42
+      ],
+      "monster": [
+        {
+          "name": "earth-demon",
+          "type": "elite"
+        },
+        {
+          "name": "flame-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "A2b",
+      "marker": "c",
+      "monster": [
+        {
+          "name": "earth-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "type": "elite"
+        }
+      ]
+    }
+  ]
+}

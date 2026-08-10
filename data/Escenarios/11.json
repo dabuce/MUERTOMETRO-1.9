@@ -1,0 +1,285 @@
+{
+  "index": "11",
+  "name": "Gloomhaven Square A",
+  "flowChartGroup": "the-merchant",
+  "coordinates": {
+    "x": 2380.5,
+    "y": 288,
+    "width": 182,
+    "height": 159,
+    "gridLocation": "B-16"
+  },
+  "edition": "gh",
+  "unlocks": [
+    "16",
+    "18"
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!end-of-the-invasion"
+      ]
+    }
+  ],
+  "blocks": [
+    "12"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "city-rule-economic",
+      "end-of-the-invasion"
+    ],
+    "gold": 15,
+    "reputation": -2,
+    "prosperity": 2,
+    "itemDesigns": [
+      "113"
+    ]
+  },
+  "monsters": [
+    "captain-of-the-guard",
+    "city-archer",
+    "city-guard",
+    "living-bones",
+    "living-corpse"
+  ],
+  "allies": [
+    "living-bones",
+    "living-corpse"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "D1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "H1b",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "type": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "L1a",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "type": "normal"
+        },
+        {
+          "name": "city-archer",
+          "type": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-archer",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-bones",
+          "type": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-bones",
+          "player2": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "E1a",
+      "marker": "1",
+      "treasures": [
+        5
+      ],
+      "monster": [
+        {
+          "name": "captain-of-the-guard",
+          "type": "boss"
+        },
+        {
+          "name": "city-archer",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

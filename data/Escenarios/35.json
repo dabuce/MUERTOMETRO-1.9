@@ -1,0 +1,207 @@
+{
+  "index": "35",
+  "name": "Gloomhaven Battlements A",
+  "flowChartGroup": "demon-and-rift",
+  "coordinates": {
+    "x": 2103.25,
+    "y": 136,
+    "width": 206,
+    "height": 185,
+    "gridLocation": "A-14"
+  },
+  "edition": "gh",
+  "unlocks": [
+    "45"
+  ],
+  "requires": [
+    [
+      "10"
+    ]
+  ],
+  "requirements": [
+    {
+      "global": [
+        "!the-rift-neutralized"
+      ],
+      "party": [
+        "a-demons-errand"
+      ]
+    }
+  ],
+  "blocks": [
+    "36"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "city-rule-demonic",
+      "artifact-lost"
+    ],
+    "lostPartyAchievements": [
+      "a-demons-errand"
+    ],
+    "gold": 30,
+    "reputation": -5,
+    "prosperity": -2,
+    "events": [
+      "city:79"
+    ]
+  },
+  "monsters": [
+    "captain-of-the-guard",
+    "city-archer",
+    "city-guard",
+    "earth-demon",
+    "flame-demon",
+    "frost-demon",
+    "wind-demon"
+  ],
+  "allies": [
+    "earth-demon",
+    "flame-demon",
+    "frost-demon",
+    "wind-demon"
+  ],
+  "objectives": [
+    {
+      "name": "Door",
+      "health": "(7+L)xC",
+      "marker": "1"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "L1b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "city-archer",
+          "type": "elite",
+          "marker": "a"
+        },
+        {
+          "name": "city-archer",
+          "type": "elite",
+          "marker": "b"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "elite",
+          "marker": "a"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "elite",
+          "marker": "b"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "earth-demon",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ],
+      "objectives": [
+        1
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "I1b",
+      "marker": "1",
+      "treasures": [
+        61
+      ],
+      "monster": [
+        {
+          "name": "captain-of-the-guard",
+          "type": "boss"
+        },
+        {
+          "name": "city-archer",
+          "type": "elite"
+        },
+        {
+          "name": "city-archer",
+          "type": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-archer",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "type": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "city-guard",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

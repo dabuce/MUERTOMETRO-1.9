@@ -1,0 +1,214 @@
+{
+  "index": "22",
+  "name": "Temple of the Elements",
+  "coordinates": {
+    "x": 1168.75,
+    "y": 1583,
+    "width": 206,
+    "height": 162,
+    "gridLocation": "K-8"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "31",
+    "35",
+    "36"
+  ],
+  "requires": [
+    [
+      "10"
+    ],
+    [
+      "26"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "a-demons-errand"
+      ]
+    },
+    {
+      "party": [
+        "following-clues"
+      ]
+    }
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "artifact-recovered"
+    ]
+  },
+  "monsters": [
+    "cultist",
+    "earth-demon",
+    "flame-demon",
+    "frost-demon",
+    "living-bones",
+    "wind-demon"
+  ],
+  "objectives": [
+    {
+      "name": "Altar",
+      "health": "4+(CxL)",
+      "marker": "a"
+    }
+  ],
+  "rules": [
+    {
+      "round": "true",
+      "always": true,
+      "requiredRooms": [
+        2
+      ],
+      "alwaysApply": true,
+      "statEffects": [
+        {
+          "identifier": {
+            "type": "monster",
+            "edition": "gh",
+            "name": ".*demon.*"
+          },
+          "reference": {
+            "identifier": {
+              "type": "objective",
+              "name": "Altar"
+            },
+            "type": "present"
+          },
+          "statEffect": {
+            "health": "X",
+            "movement": "[Math.ceil(X/2)]",
+            "attack": "X",
+            "range": "[Math.ceil(X/2)]"
+          },
+          "note": "%data.scenario.rules.gh.22.1%"
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "B2b",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "cultist",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "M1a",
+      "marker": "1",
+      "rooms": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "treasures": [
+        21
+      ],
+      "monster": [
+        {
+          "name": "cultist",
+          "type": "elite"
+        },
+        {
+          "name": "cultist",
+          "player2": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "cultist",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ],
+      "objectives": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "D1a",
+      "monster": [
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "C2b",
+      "monster": [
+        {
+          "name": "wind-demon",
+          "type": "normal"
+        },
+        {
+          "name": "wind-demon",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "C1a",
+      "monster": [
+        {
+          "name": "frost-demon",
+          "type": "normal"
+        },
+        {
+          "name": "frost-demon",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 6,
+      "ref": "D2a",
+      "monster": [
+        {
+          "name": "earth-demon",
+          "type": "normal"
+        },
+        {
+          "name": "earth-demon",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "index": "60",
+  "name": "Alchemy Lab",
+  "flowChartGroup": "personal-quests",
+  "coordinates": {
+    "x": 2247.5,
+    "y": 247,
+    "width": 164,
+    "height": 139,
+    "gridLocation": "B-15"
+  },
+  "edition": "gh",
+  "rewards": {
+    "envelopes": [
+      "X"
+    ],
+    "prosperity": 1,
+    "custom": "%data.scenario.rewards.gh.60%"
+  },
+  "monsters": [
+    "giant-viper",
+    "hound",
+    "ooze",
+    "rending-drake",
+    "spitting-drake"
+  ],
+  "rules": [
+    {
+      "round": "R > 6",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "all"
+          },
+          "scenarioEffect": true,
+          "type": "damage",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "round": "R == 12",
+      "finish": "lost"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "G2b",
+      "initial": true,
+      "rooms": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "B4a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "type": "elite"
+        },
+        {
+          "name": "hound",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "B3a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "rending-drake",
+          "type": "normal"
+        },
+        {
+          "name": "rending-drake",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "spitting-drake",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "B1a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "type": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "type": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "giant-viper",
+          "player4": "normal"
+        },
+        {
+          "name": "giant-viper",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "B2a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "ooze",
+          "type": "elite"
+        },
+        {
+          "name": "ooze",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "ooze",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "ooze",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "ooze",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

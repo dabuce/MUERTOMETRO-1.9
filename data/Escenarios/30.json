@@ -1,0 +1,136 @@
+{
+  "index": "30",
+  "name": "Shrine of the Depths",
+  "flowChartGroup": "voice",
+  "coordinates": {
+    "x": 2186.5,
+    "y": 2046,
+    "width": 215,
+    "height": 156,
+    "gridLocation": "N-15"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "42"
+  ],
+  "requires": [
+    [
+      "24"
+    ]
+  ],
+  "requirements": [
+    {
+      "party": [
+        "the-voices-command"
+      ]
+    }
+  ],
+  "rewards": {
+    "partyAchievements": [
+      "the-scepter-and-the-voice"
+    ],
+    "gold": 10
+  },
+  "monsters": [
+    "deep-terror",
+    "lurker",
+    "ooze"
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "E1a",
+      "initial": true,
+      "rooms": [
+        2
+      ],
+      "monster": [
+        {
+          "name": "ooze",
+          "type": "elite"
+        },
+        {
+          "name": "ooze",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "ooze",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "ooze",
+          "player4": "normal"
+        },
+        {
+          "name": "ooze",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "L1a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "deep-terror",
+          "type": "normal"
+        },
+        {
+          "name": "deep-terror",
+          "type": "normal"
+        },
+        {
+          "name": "deep-terror",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "deep-terror",
+          "player4": "elite"
+        },
+        {
+          "name": "lurker",
+          "type": "normal"
+        },
+        {
+          "name": "lurker",
+          "type": "normal"
+        },
+        {
+          "name": "lurker",
+          "type": "elite"
+        },
+        {
+          "name": "lurker",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "lurker",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "lurker",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

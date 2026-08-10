@@ -1,0 +1,238 @@
+{
+  "index": "40",
+  "name": "Ancient Defense Network",
+  "flowChartGroup": "voice",
+  "coordinates": {
+    "x": 1745.5,
+    "y": 814,
+    "width": 193,
+    "height": 151,
+    "gridLocation": "F-12"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "unlocks": [
+    "41"
+  ],
+  "requirements": [
+    {
+      "party": [
+        "the-voices-command",
+        "the-voices-treasure"
+      ]
+    }
+  ],
+  "links": [
+    "41"
+  ],
+  "rewards": {
+    "globalAchievements": [
+      "ancient-technology"
+    ]
+  },
+  "monsters": [
+    "cave-bear",
+    "flame-demon",
+    "forest-imp",
+    "living-corpse",
+    "stone-golem"
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "minus1extra:3",
+          "scenarioEffect": true
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "M1a",
+      "initial": true,
+      "rooms": [
+        2,
+        5
+      ],
+      "monster": [
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "D2a",
+      "rooms": [
+        3
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "type": "elite"
+        },
+        {
+          "name": "cave-bear",
+          "player4": "normal"
+        },
+        {
+          "name": "cave-bear",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "D1a",
+      "rooms": [
+        4
+      ],
+      "monster": [
+        {
+          "name": "flame-demon",
+          "type": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player4": "normal"
+        },
+        {
+          "name": "flame-demon",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "A4b",
+      "treasures": [
+        47
+      ],
+      "monster": [
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "K2b",
+      "rooms": [
+        6
+      ],
+      "monster": [
+        {
+          "name": "cave-bear",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "type": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "forest-imp",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 6,
+      "ref": "C1a",
+      "rooms": [
+        7
+      ],
+      "monster": [
+        {
+          "name": "living-corpse",
+          "type": "normal"
+        },
+        {
+          "name": "living-corpse",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "living-corpse",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 7,
+      "ref": "L1a",
+      "monster": [
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "type": "normal"
+        },
+        {
+          "name": "stone-golem",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    }
+  ]
+}

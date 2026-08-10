@@ -1,0 +1,244 @@
+{
+  "index": "65",
+  "name": "Sulfur Mine",
+  "flowChartGroup": "random-scenarios",
+  "coordinates": {
+    "x": 662.5,
+    "y": 1769,
+    "width": 213,
+    "height": 188,
+    "gridLocation": "L-5"
+  },
+  "edition": "gh",
+  "eventType": "road",
+  "random": true,
+  "rewards": {
+    "globalAchievements": [
+      "ancient-technology"
+    ],
+    "itemDesigns": [
+      "112"
+    ]
+  },
+  "monsters": [
+    "hound",
+    "inox-shaman",
+    "vermling-scout"
+  ],
+  "rules": [
+    {
+      "round": "R == 1",
+      "start": true,
+      "figures": [
+        {
+          "identifier": {
+            "type": "character",
+            "name": ".*"
+          },
+          "type": "amAdd",
+          "value": "curse:4",
+          "scenarioEffect": true
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 1,
+      "ref": "H1a",
+      "initial": true,
+      "rooms": [
+        2,
+        3,
+        7
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player2": "normal",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 2,
+      "ref": "H2a",
+      "rooms": [
+        4,
+        5,
+        6
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player2": "normal",
+          "player3": "elite",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player4": "normal"
+        },
+        {
+          "name": "hound",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "type": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 3,
+      "ref": "B1a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    },
+    {
+      "roomNumber": 4,
+      "ref": "B3a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "vermling-scout",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 5,
+      "ref": "I2b",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "type": "normal"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "inox-shaman",
+          "type": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 6,
+      "ref": "B4a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "vermling-scout",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        },
+        {
+          "name": "vermling-scout",
+          "player3": "normal",
+          "player4": "normal"
+        }
+      ]
+    },
+    {
+      "roomNumber": 7,
+      "ref": "B2a",
+      "treasures": [
+        "G"
+      ],
+      "monster": [
+        {
+          "name": "hound",
+          "player3": "normal",
+          "player4": "normal"
+        },
+        {
+          "name": "vermling-scout",
+          "player2": "elite",
+          "player3": "normal",
+          "player4": "elite"
+        }
+      ]
+    }
+  ]
+}
