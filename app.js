@@ -353,7 +353,6 @@ function beginListDrag(gesture) {
   gesture.placeholder.style.width = `${rect.width}px`;
 
   gesture.parent.insertBefore(gesture.placeholder, gesture.node);
-  document.body.appendChild(gesture.node);
   gesture.node.classList.add("is-dragging");
   gesture.node.style.position = "fixed";
   gesture.node.style.left = `${rect.left}px`;
@@ -364,6 +363,7 @@ function beginListDrag(gesture) {
   gesture.node.style.zIndex = "1000";
   gesture.node.style.pointerEvents = "none";
   gesture.node.style.touchAction = "none";
+  gesture.node.style.willChange = "transform";
   gesture.node.style.transform = `translate3d(${gesture.currentX - gesture.startX}px, ${gesture.currentY - gesture.startY}px, 0)`;
   moveDragPlaceholder(gesture);
 }
@@ -371,7 +371,7 @@ function beginListDrag(gesture) {
 function moveDragPlaceholder(gesture) {
   if (!gesture.placeholder || !gesture.parent) return;
 
-  const children = Array.from(gesture.parent.children).filter(child => child !== gesture.placeholder);
+  const children = Array.from(gesture.parent.children).filter(child => child !== gesture.placeholder && child !== gesture.node);
   let before = null;
 
   for (const child of children) {
@@ -467,6 +467,7 @@ function cleanupGestureNode(gesture) {
   node.style.removeProperty("z-index");
   node.style.removeProperty("pointer-events");
   node.style.removeProperty("touch-action");
+  node.style.removeProperty("will-change");
 
   if (gesture.placeholder?.parentNode) {
     gesture.placeholder.remove();
